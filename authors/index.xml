@@ -5,7 +5,7 @@
     <link>https://varun19299.github.io/authors/</link>
       <atom:link href="https://varun19299.github.io/authors/index.xml" rel="self" type="application/rss+xml" />
     <description>Authors</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 26 Jan 2019 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://varun19299.github.io/img/icon-192.png</url>
       <title>Authors</title>
@@ -13,13 +13,39 @@
     </image>
     
     <item>
+      <title>A Gokhale</title>
+      <link>https://varun19299.github.io/authors/a-gokhale/</link>
+      <pubDate>Sat, 26 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://varun19299.github.io/authors/a-gokhale/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>N Krishna</title>
+      <link>https://varun19299.github.io/authors/n-krishna/</link>
+      <pubDate>Sat, 26 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://varun19299.github.io/authors/n-krishna/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>V Sundar</title>
+      <link>https://varun19299.github.io/authors/v-sundar/</link>
+      <pubDate>Sat, 26 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://varun19299.github.io/authors/v-sundar/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title></title>
       <link>https://varun19299.github.io/authors/admin/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://varun19299.github.io/authors/admin/</guid>
-      <description>&lt;p&gt;I&amp;rsquo;m a senior undergrad in the Department of Electrical Engineering at Indian Institute of Technology Madras (IIT-M), India.&lt;/p&gt;
+      <description>&lt;p&gt;I&amp;rsquo;m a senior undergraduate in the Department of Electrical Engineering at the &lt;a href=&#34;http://iitm.ac.in/&#34; target=&#34;_blank&#34;&gt;Indian Institute of Technology Madras&lt;/a&gt; (IIT-M), India. My goal is to pursue a PhD in the intersection of computer vision and computational photography, begining Fall 2020.&lt;/p&gt;
 
-&lt;p&gt;During the summer of 2019, I worked at the IRIS lab., USC under Prof. Ram Nevatia, where I explored decoupling attribute features from object features.&lt;/p&gt;
+&lt;p&gt;This website is a collection of my research projects and other exploratory projects done. There is also a solitary blog-post regarding a pet research idea of mine: CNN-SLAM. Hopefully, there&amp;rsquo;ll be a few others joining this one soon!&lt;/p&gt;
+
+&lt;p&gt;In case any of these topics piques your interests and you would like to talk about them (&lt;em&gt;or just say hi&lt;/em&gt;) feel free to &lt;a href=&#34;https://varun19299.github.io/contact&#34;&gt;contact&lt;/a&gt; me!&lt;/p&gt;
 </description>
     </item>
     

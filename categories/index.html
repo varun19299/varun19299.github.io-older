@@ -83,7 +83,7 @@
   
   
   
-  <link rel="stylesheet" href="https://varun19299.github.io/css/academic.min.a3cda781a9b24f26fefd34a53547835b.css">
+  <link rel="stylesheet" href="https://varun19299.github.io/css/academic.min.613d5ab145b40da20c5c3a6f8b32e49a.css">
 
   
 
@@ -142,7 +142,10 @@
 
 </head>
 
-<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+<body id="top" data-spy="scroll" data-offset="70"
+  data-target="#TableOfContents"
+  >
 
   <aside class="search-results" id="search">
   <div class="container">
@@ -574,8 +577,25 @@
     </span>
     
   </p>
-</footer>
 
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\[','\]']],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: { equationNumbers: { autoNumber: "AMS" },
+           extensions: ["AMSmath.js", "AMSsymbols.js"] }
+    }
+  });
+  </script>
+</footer>
   </div>
   
 
@@ -605,5 +625,7 @@
   </div>
 </div>
 
+
 </body>
+
 </html>

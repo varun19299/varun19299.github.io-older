@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.5.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Varun Sundar">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Our entry at MBRDI Hackathon 2019, describing a correspondence between cameras and LiDARs for synthetic simulation. We utilised the autnomous car simulator CARLA extensively throughout this process.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://varun19299.github.io/projects/lidar/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://varun19299.github.io/css/academic.min.613d5ab145b40da20c5c3a6f8b32e49a.css">
+
+  
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="https://varun19299.github.io/index.webmanifest">
+  <link rel="icon" type="image/png" href="https://varun19299.github.io/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="https://varun19299.github.io/img/icon-192.png">
+
+  <link rel="canonical" href="https://varun19299.github.io/projects/lidar/">
+
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Varun Sundar">
+  <meta property="og:url" content="https://varun19299.github.io/projects/lidar/">
+  <meta property="og:title" content="Simulating Commercial LiDARs using Physics based Game Engines | Varun Sundar">
+  <meta property="og:description" content="Our entry at MBRDI Hackathon 2019, describing a correspondence between cameras and LiDARs for synthetic simulation. We utilised the autnomous car simulator CARLA extensively throughout this process."><meta property="og:image" content="https://varun19299.github.io/projects/lidar/featured.gif">
+  <meta property="twitter:image" content="https://varun19299.github.io/projects/lidar/featured.gif"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2019-01-26T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2019-01-26T00:00:00&#43;00:00">
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Simulating Commercial LiDARs using Physics based Game Engines | Varun Sundar</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70"
+  data-target="#TableOfContents"
+  >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="https://varun19299.github.io/">Varun Sundar</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="https://varun19299.github.io/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="https://varun19299.github.io/education/"><span>Education</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="https://varun19299.github.io/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="https://varun19299.github.io/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="https://varun19299.github.io/contact/"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="https://varun19299.github.io/files/cv.pdf"><span>CV</span></a>
+        </li>
+
+        
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  <script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https:\/\/varun19299.github.io\/"
+        },
+        "articleSection" : "projects",
+        "name" : "Simulating Commercial LiDARs using Physics based Game Engines",
+        "headline" : "Simulating Commercial LiDARs using Physics based Game Engines",
+        "description" : "Our entry at MBRDI Hackathon 2019, describing a correspondence between cameras and LiDARs for synthetic simulation. We utilised the autnomous car simulator CARLA extensively throughout this process.",
+        "inLanguage" : "en-US",
+        "author" : "",
+        "creator" : "",
+        "publisher": "",
+        "accountablePerson" : "",
+        "copyrightHolder" : "",
+        "copyrightYear" : "2019",
+        "datePublished": "2019-01-26 00:00:00 \x2b0000 UTC",
+        "dateModified" : "2019-01-26 00:00:00 \x2b0000 UTC",
+        "url" : "https:\/\/varun19299.github.io\/projects\/lidar\/",
+        "wordCount" : "1129",
+        "keywords" : [ "Project","Blog" ]
+    }
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="article-container pt-3">
+  <h1>Simulating Commercial LiDARs using Physics based Game Engines</h1>
+
+  
+
+  
+
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+
+
+  
+  <span><a href="https://varun19299.github.io/authors/v-sundar/">V Sundar</a></span>, <span><a href="https://varun19299.github.io/authors/a-gokhale/">A Gokhale</a></span>, <span><a href="https://varun19299.github.io/authors/n-krishna/">N Krishna</a></span>
+
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jan 26, 2019
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+
+  
+    
+
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="btn-links mb-3">
+  
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  
+  
+    
+  
+  <a class="btn btn-outline-primary my-1 mr-1" href="https://drive.google.com/open?id=1AF79hu9Ccj81V3F6svxUr5tS1DHric8s" target="_blank" rel="noopener">
+    
+    Technical Report
+  </a>
+
+  
+  
+  
+    
+  
+  
+  
+  
+  
+    
+  
+  <a class="btn btn-outline-primary my-1 mr-1" href="https://drive.google.com/open?id=1no8A0kdrjgwTpNSugBWQraSXk_0t5aFI" target="_blank" rel="noopener">
+    
+    Pitch Slides
+  </a>
+
+  
+  
+  
+    
+  
+  
+  
+  
+  
+    
+  
+  <a class="btn btn-outline-primary my-1 mr-1" href="https://drive.google.com/open?id=1U1zwe0DPfIdOq5ide3L0TOWp8zNlj4Y2" target="_blank" rel="noopener">
+    
+    Demo Slides
+  </a>
+
+
+</div>
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4"
+  style="max-width: 720px; max-height: 540px;">
+  <div style="position: relative">
+    <img src="https://varun19299.github.io/projects/lidar/featured_hua77547b9116174e4cb641950a929863f_2884858_720x0_resize_lanczos.gif" alt="" class="featured-image">
+    <span
+      class="article-header-caption">Credits: Carla documentation</span>
+  </div>
+</div>
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+<p><em>Note: This work was done as a part of the <strong>MBRDI Hackathon 2019, Bangalore</strong>. We placed third in the contest with our entry. For further details you can refer to our technical report or presentations.</em></p>
+
+<p>LiDAR point clouds are crucial in achieving level 4 and level 5 autonomous navigation. At the same time, obtaining LiDAR data for extensive scenes can be quite challenging. Hence, generating LiDAR data under synthetic simulations with control on parameters such as reflectivity, range, Field of View (FOV), etc would be useful. (See <a href="https://www.youtube.com/watch?v=oZ7P4RsTE64" target="_blank">this</a> if you would like to see a how real LiDAR outputs look like.)</p>
+
+<p>In this project, we demonstrate an approach based on <strong>treating a camera as the equivalent of a LiDAR.</strong> In fact, this approach has been used elsewhere in computational photography and photogrammetry (or geometric computer vision): a very similar concept is prevelant in the very construction of a Time of Flight camera.</p>
+
+<p>A carefull reader at this point would interrupt us to ask a natural question. Why not consider ray-casting, which is offered by many physics and game engines alike? Why then should someone choose to resort to such a camera based approach? With all the existing work behind parallel compute for ray casting, it seems like the perfect candidate for the job. The picture at the top represents this, and is in fact from the simulation engine <a href="http://carla.readthedocs.io" target="_blank">Carla</a>. However, the team at <strong>MBRDI</strong> wanted us to generate point clouds for a given road layout and for <strong>selected objects only</strong>.</p>
+
+<h3 id="opendrive-layout">OpenDRIVE Layout</h3>
+
+<p>The input data given is in the form of <a href="http://www.opendrive.org" target="_blank">OpenDRIVE</a> layout, which essentially specifies road geometry and other objects (crossings, potential obstacles, poles, etc.). It <strong>does not</strong> include information on road texture or renderings of objects present. In the below picture, we show a sample Opendrive file.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="opendrive.png" data-caption="Sample OpenDRIVE layout.">
+<img src="opendrive.png" alt="" width="800" height="400" ></a>
+
+
+  
+  
+  <figcaption>
+    Sample OpenDRIVE layout.
+  </figcaption>
+
+
+</figure>
+
+
+<p>Note the same file rendered with software such as Sketchup 3D.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="sketch.png" data-caption="Same OpenDRIVE layout rendered by Sketch3D.">
+<img src="sketch.png" alt="" width="800" height="700" ></a>
+
+
+  
+  
+  <figcaption>
+    Same OpenDRIVE layout rendered by Sketch3D.
+  </figcaption>
+
+
+</figure>
+
+
+<p>So, we wish to create a blackbox when given this road layout (and optionally some knowledge regarding objects on the road) can generate a 3D point cloud for specified targets, closely mimicking a real LiDAR.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="flow.png" data-caption="Intended process flowchart.">
+<img src="flow.png" alt="" width="800" height="400" ></a>
+
+
+  
+  
+  <figcaption>
+    Intended process flowchart.
+  </figcaption>
+
+
+</figure>
+
+
+<h3 id="image-lidar-calibration">Image-LIDAR Calibration</h3>
+
+<p>Our first step is to draw correspondence between a given pixel and a 3D world point. This is done in a straightforward manner using projective geometry.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="proj.png" data-caption="Proposed calibration scheme between a LiDAR and a camera. Credits: Yue et al., CVPR&rsquo;18.">
+<img src="proj.png" alt="" width="800" height="700" ></a>
+
+
+  
+  
+  <figcaption>
+    Proposed calibration scheme between a LiDAR and a camera. Credits: Yue <em>et al.</em>, CVPR&rsquo;18.
+  </figcaption>
+
+
+</figure>
+
+
+<p>The goal of the calibration process is to find a function between each LiDAR Point and a pixel in the image. By utilising a depth map, we are able to do the converse too. The method we have adopted does the calibration automatically based on camera and LiDAR scanner parameters. It is similar to the camera perspective projection model once we set the camera and LiDAR at the same position, as shown in the above figure. Our method is based on work by Yue <em>et al.</em>, CVPR 2018. We utilise their calibration scheme for our task as well.</p>
+
+<p>The problem is formulated as follows: for a certain laser ray  with azimuth angle <code>$\phi$</code>  and zenith angle <code>$\theta$</code>, calculate the  index <code>$(i,j)$</code> of  the  corresponding  pixel  on  image. <code>${F_c},{F_o},{P}, {P^{\prime}}$</code> and <code>$P_{far}$</code> are  3-D  coordinates  of  a)  centre  of camera/LiDAR  scanner,  b)  centre  of  camera  near  clipping plane.  c)  point  first  hit  by  the  virtual  laser  ray  (in  red), d)  pixel  on  image  corresponding  to <code>$P$</code>, e)  a  point  far away  in  the  laser  direction,  respectively. Also, <code>$m$</code> and <code>$n$</code> are  the width and height of the near clipping plane. <code>$\gamma$</code> is <code>$1/2$</code> vertical FOV of camera while <code>$\psi$</code> is <code>$1/2$</code> vertical FOV of the LiDAR scanner.  Note  that  LiDAR  scanner  FOV  is usually  smaller than camera FOV, since there is usually no object in the top part of the image, and the emitting laser to open space is not necessary.</p>
+
+<p>After a series of 3D geometry calculation, we can get:
+<code>$$i = \frac{R_m}{m} (f\cdot tan\gamma \cdot \frac{m}{n} - \frac{f}{cos\theta} \cdot tan\phi)$$</code></p>
+
+<p><code>$$j = \frac{R_n}{n} (f\cdot tan\gamma + f \cdot tan\theta)$$</code></p>
+
+<p>where <code>$f = \||\vec{F_c F_o}||$</code>, and <code>$(R_m,R_n)$</code> is the pixel resolution of the image/near clipping plane. Further, in order for the ray casting API to work properly, the 3D coordinates of <code>$P_{far}$</code> are also required. Using similar 3D geometry calculations, we obtain:</p>
+
+<p><code>$$P^{\prime} = F_c + f \cdot \vec{x_c} - \frac{f}{cos\theta} \cdot tan \phi \cdot \vec{y_c} -f\cdot tan\theta \cdot \vec{z_c}$$</code></p>
+
+<p><code>$$P_{far}= F_c + k \cdot (P^{\prime}- F_c)$$</code></p>
+
+<p>where k is a large coefficient, and <code>$\vec{x_c}, \vec{y_c}, \vec{z_c}$</code> are unit vectors of the camera axis in the world coordinate system. After simulation, both image and point cloud of the specified in-model scene are collected by the framework.</p>
+
+<p>With this step, we can associate each 3D point to a pixel and each (valid) pixel to a given 3D point according to the LiDAR&rsquo;s construction.</p>
+
+<h3 id="identify-targets-introduce-sparsity">Identify Targets, Introduce Sparsity</h3>
+
+<p>The second step involves introducing artefacts such as sparsity and intensity variation typically found in real LiDARs such as a <a href="http://velodynelidar.com/" target="_blank">Velodyne VLP-16</a>. We can either do this by modelling the physics for reflectivity (with models of varying complexity) or by using data as a prior. Since our purpose here is to just demonstrate a proof of concept, we take the easier way out and turn to data-driven priors. In essence, we utilise a deep network which converts image taken by a camera to a sparse intensity map akin to a LiDAR.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="kitti.png" data-caption="Sample sparse depth points from the KITTI Dataset.">
+<img src="kitti.png" alt="" width="800" height="700" ></a>
+
+
+  
+  
+  <figcaption>
+    Sample sparse depth points from the <a href="http://www.cvlibs.net/datasets/kitti/" target="_blank">KITTI Dataset</a>.
+  </figcaption>
+
+
+</figure>
+
+
+<p>For the required data, we turn to the popular KITTI dataset, which includes VLP-16 acquisitions as shown below. For a visualisation of LiDAR data in the KITTI dataset, take a look at this excellant <a href="https://navoshta.com/kitti-lidar/" target="_blank">blog post</a>. A sample data point is shown in the figure above. In this step, we also choose to identify targets of interest according to the given road layout (which is in the OpenDrive format).</p>
+
+<h3 id="reproject-points-back-to-3d">Reproject Points back to 3D</h3>
+
+<p>Finally, having selected our objects of interest in the camera frame, we can reproject back to 3D. We select these objects using routine tools from computer vision such as segmentation, contour detection, object detection etc. In order to obtain intensities at those points, we simply follow a naive inverse-square power law model. Here&rsquo;s a sample point cloud rendering.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="point_cloud.png" data-caption="Sample point cloud.">
+<img src="point_cloud.png" alt="" width="800" height="700" ></a>
+
+
+  
+  
+  <figcaption>
+    Sample point cloud.
+  </figcaption>
+
+
+</figure>
+
+
+<h3 id="concluding-notes">Concluding Notes</h3>
+
+<p>Our solution to this hackathon conducted by <strong>MBRDI</strong> involved a simple bijection  between LiDARs and cameras in the simulation world. With this correspondence, we are oepn to a lot of tools from the image processing and computer vision community. We&rsquo;ve certainly been sub-optimal in a lot of places, including:</p>
+
+<ul>
+<li>Simple assumptions of intensity variation</li>
+<li>Not handling multiple reflections</li>
+</ul>
+
+<p>We shall try addressing some of these as future work.</p>
+
+<h3 id="references">References</h3>
+
+<ol>
+<li>Yue <em>et al.</em>, <strong>A LiDAR Point Cloud Generator: from a Virtual World to Autonomous Driving</strong>, CVPR 2018.</li>
+<li><a href="https://carla.readthedocs.io" target="_blank">Carla docs</a>.</li>
+</ol>
+
+    </div>
+
+    
+
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="https://varun19299.github.io/tags/project/">Project</a>
+  
+</div>
+
+
+
+    
+    
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+  
+  
+  
+  
+  <div class="media author-card">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://varun19299.github.io/authors/v-sundar/"></a></h5>
+      
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+    
+    
+    
+
+    
+
+    
+
+
+  </div>
+</article>
+
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+      
+
+    
+    
+    
+    <script src="https://varun19299.github.io/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="https://varun19299.github.io/js/academic.min.0bf1e3db85cbb232372ed31d6f10dc70.js"></script>
+
+    
+
+
+
+
+
+
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ['\[','\]']],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: { equationNumbers: { autoNumber: "AMS" },
+           extensions: ["AMSmath.js", "AMSsymbols.js"] }
+    }
+  });
+  </script>
+</footer>
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+
+</html>
