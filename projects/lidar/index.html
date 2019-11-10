@@ -407,7 +407,7 @@
         "datePublished": "2019-01-26 00:00:00 \x2b0000 UTC",
         "dateModified" : "2019-01-26 00:00:00 \x2b0000 UTC",
         "url" : "https:\/\/varun19299.github.io\/projects\/lidar\/",
-        "wordCount" : "1129",
+        "wordCount" : "1145",
         "keywords" : [ "Project","Blog" ]
     }
     </script>
@@ -614,11 +614,11 @@
 
 <p>In this project, we demonstrate an approach based on <strong>treating a camera as the equivalent of a LiDAR.</strong> In fact, this approach has been used elsewhere in computational photography and photogrammetry (or geometric computer vision): a very similar concept is prevelant in the very construction of a Time of Flight camera.</p>
 
-<p>A carefull reader at this point would interrupt us to ask a natural question. Why not consider ray-casting, which is offered by many physics and game engines alike? Why then should someone choose to resort to such a camera based approach? With all the existing work behind parallel compute for ray casting, it seems like the perfect candidate for the job. The picture at the top represents this, and is in fact from the simulation engine <a href="http://carla.readthedocs.io" target="_blank">Carla</a>. However, the team at <strong>MBRDI</strong> wanted us to generate point clouds for a given road layout and for <strong>selected objects only</strong>.</p>
+<p>A careful reader at this point would interrupt us to ask a natural question. Why not consider ray-casting, which is offered by many physics and game engines alike? Why then should someone choose to resort to such a camera based approach? With all the existing work behind parallel compute for ray casting, it seems like the perfect candidate for the job. The picture at the top represents this, and is in fact from the simulation engine <a href="http://carla.readthedocs.io" target="_blank">Carla</a>. However, the team at <strong>MBRDI</strong> wanted us to generate point clouds for a given road layout and for <strong>specified objects only</strong>.</p>
 
 <h3 id="opendrive-layout">OpenDRIVE Layout</h3>
 
-<p>The input data given is in the form of <a href="http://www.opendrive.org" target="_blank">OpenDRIVE</a> layout, which essentially specifies road geometry and other objects (crossings, potential obstacles, poles, etc.). It <strong>does not</strong> include information on road texture or renderings of objects present. In the below picture, we show a sample Opendrive file.</p>
+<p>The input data given is in the form of an <a href="http://www.opendrive.org" target="_blank">OpenDRIVE</a> layout, which essentially specifies road geometry and other objects (crossings, potential obstacles, poles, etc.). It <strong>does not</strong> include information on road texture or renderings of objects present. In the below picture, we show a sample Opendrive file.</p>
 
 
 
@@ -842,8 +842,9 @@
 <p>Our solution to this hackathon conducted by <strong>MBRDI</strong> involved a simple bijection  between LiDARs and cameras in the simulation world. With this correspondence, we are oepn to a lot of tools from the image processing and computer vision community. We&rsquo;ve certainly been sub-optimal in a lot of places, including:</p>
 
 <ul>
-<li>Simple assumptions of intensity variation</li>
-<li>Not handling multiple reflections</li>
+<li>Simple assumptions on intensity variation.</li>
+<li>Not handling multiple or specular reflections.</li>
+<li>Point clouds rendered is with respect to texture offered by such game engines.</li>
 </ul>
 
 <p>We shall try addressing some of these as future work.</p>
