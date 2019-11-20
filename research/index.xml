@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Researches | Varun Sundar</title>
+    <link>https://varun19299.github.io/research/</link>
+      <atom:link href="https://varun19299.github.io/research/index.xml" rel="self" type="application/rss+xml" />
+    <description>Researches</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 15 May 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://varun19299.github.io/img/icon-192.png</url>
+      <title>Researches</title>
+      <link>https://varun19299.github.io/research/</link>
+    </image>
+    
+    <item>
+      <title>MRAS Bandits: From Control Theory to Slot Machines</title>
+      <link>https://varun19299.github.io/research/mras/</link>
+      <pubDate>Wed, 15 May 2019 00:00:00 +0000</pubDate>
+      <guid>https://varun19299.github.io/research/mras/</guid>
+      <description>
+
+&lt;p&gt;&lt;em&gt;Note: This work was done as a part of the course project under the guidance of &lt;a href=&#34;http://www.cse.iitm.ac.in/~prashla/&#34; target=&#34;_blank&#34;&gt;Prof. LA Prashanth&lt;/a&gt; for CS6700, IIT Madras. We are presently working on finite time analysis of this algorithm for both Regret Minimisation and Best Arm Identification settings.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;the-mras-algorithm&#34;&gt;The MRAS Algorithm&lt;/h3&gt;
+
+&lt;h3 id=&#34;adapting-to-the-bandit-setting&#34;&gt;Adapting to the Bandit Setting&lt;/h3&gt;
+
+&lt;h3 id=&#34;references&#34;&gt;References&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Yue &lt;em&gt;et al.&lt;/em&gt;, &lt;strong&gt;A LiDAR Point Cloud Generator: from a Virtual World to Autonomous Driving&lt;/strong&gt;, CVPR 2018.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://carla.readthedocs.io&#34; target=&#34;_blank&#34;&gt;Carla docs&lt;/a&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
