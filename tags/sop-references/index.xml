@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SOP References | Varun Sundar</title>
+    <link>https://varun19299.github.io/tags/sop-references/</link>
+      <atom:link href="https://varun19299.github.io/tags/sop-references/index.xml" rel="self" type="application/rss+xml" />
+    <description>SOP References</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 15 May 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://varun19299.github.io/img/icon-192.png</url>
+      <title>SOP References</title>
+      <link>https://varun19299.github.io/tags/sop-references/</link>
+    </image>
+    
+    <item>
+      <title>References: Statement of Purpose</title>
+      <link>https://varun19299.github.io/sop-references/</link>
+      <pubDate>Wed, 15 May 2019 00:00:00 +0000</pubDate>
+      <guid>https://varun19299.github.io/sop-references/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, S Siddique, K Mitra, &lt;strong&gt;“Unified Image Recovery for Lensless Systems”&lt;/strong&gt;, IEEE International Conference on Computational Photography 2020 (Manuscript under Preparation).&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The &lt;strong&gt;9th HULT Prize, Singapore&lt;/strong&gt;. Held at Nanyang Technology University (NTU), Singapore,16th to 18th March 2018.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, A Sadhu, R Nevatia, &lt;strong&gt;“FARCNN: Decoupling attributes from object detection”&lt;/strong&gt;, Viterbi-IUSSTF (Indo US Science and Technology Forum) REU Symposium, July 2019.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;varun19299.github.io/research/attribute-transfer&#34; target=&#34;_blank&#34;&gt;Attribute Transfer Blog Post&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;varun19299.github.io/research/mras&#34; target=&#34;_blank&#34;&gt;MRAS Bandits Blog Post&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;varun19299.github.io/post/extend-lsd-slam&#34; target=&#34;_blank&#34;&gt;Blog Post on extending LSD SLAM&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

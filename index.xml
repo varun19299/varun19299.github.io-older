@@ -5,12 +5,28 @@
     <link>https://varun19299.github.io/</link>
       <atom:link href="https://varun19299.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Varun Sundar</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 06 Oct 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 28 Nov 2019 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://varun19299.github.io/img/icon-192.png</url>
       <title>Varun Sundar</title>
       <link>https://varun19299.github.io/</link>
     </image>
+    
+    <item>
+      <title>Extending LSD SLAM with Computational Photography</title>
+      <link>https://varun19299.github.io/post/extend-lsd-slam/</link>
+      <pubDate>Thu, 28 Nov 2019 00:00:00 +0000</pubDate>
+      <guid>https://varun19299.github.io/post/extend-lsd-slam/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Attribute Transfer in a GAN Framework</title>
+      <link>https://varun19299.github.io/research/attribute-transfer/</link>
+      <pubDate>Wed, 20 Nov 2019 00:00:00 +0000</pubDate>
+      <guid>https://varun19299.github.io/research/attribute-transfer/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Contact Me</title>
@@ -290,6 +306,27 @@ that&amp;rsquo;s why they call it the present”&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Yue &lt;em&gt;et al.&lt;/em&gt;, &lt;strong&gt;A LiDAR Point Cloud Generator: from a Virtual World to Autonomous Driving&lt;/strong&gt;, CVPR 2018.&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://carla.readthedocs.io&#34; target=&#34;_blank&#34;&gt;Carla docs&lt;/a&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>References: Statement of Purpose</title>
+      <link>https://varun19299.github.io/sop-references/</link>
+      <pubDate>Wed, 15 May 2019 00:00:00 +0000</pubDate>
+      <guid>https://varun19299.github.io/sop-references/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, S Siddique, K Mitra, &lt;strong&gt;“Unified Image Recovery for Lensless Systems”&lt;/strong&gt;, IEEE International Conference on Computational Photography 2020 (Manuscript under Preparation).&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The &lt;strong&gt;9th HULT Prize, Singapore&lt;/strong&gt;. Held at Nanyang Technology University (NTU), Singapore,16th to 18th March 2018.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, A Sadhu, R Nevatia, &lt;strong&gt;“FARCNN: Decoupling attributes from object detection”&lt;/strong&gt;, Viterbi-IUSSTF (Indo US Science and Technology Forum) REU Symposium, July 2019.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;varun19299.github.io/research/attribute-transfer&#34; target=&#34;_blank&#34;&gt;Attribute Transfer Blog Post&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;varun19299.github.io/research/mras&#34; target=&#34;_blank&#34;&gt;MRAS Bandits Blog Post&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;varun19299.github.io/post/extend-lsd-slam&#34; target=&#34;_blank&#34;&gt;Blog Post on extending LSD SLAM&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>
