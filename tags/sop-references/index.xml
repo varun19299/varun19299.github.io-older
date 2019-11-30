@@ -18,17 +18,23 @@
       <pubDate>Wed, 15 May 2019 00:00:00 +0000</pubDate>
       <guid>https://varun19299.github.io/sop-references/</guid>
       <description>&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, S Siddique, K Mitra, &lt;strong&gt;“Unified Image Recovery for Lensless Systems”&lt;/strong&gt;, IEEE International Conference on Computational Photography 2020 (Manuscript under Preparation).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, S Siddique, K Mitra, &lt;strong&gt;“Unified Image Recovery for Lensless Systems”&lt;/strong&gt;, to be submitted in the IEEE Transactions on Computational Imaging 2020.&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;The &lt;strong&gt;9th HULT Prize, Singapore&lt;/strong&gt;. Held at Nanyang Technology University (NTU), Singapore,16th to 18th March 2018.&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, A Sadhu, R Nevatia, &lt;strong&gt;“FARCNN: Decoupling attributes from object detection”&lt;/strong&gt;, Viterbi-IUSSTF (Indo US Science and Technology Forum) REU Symposium, July 2019.&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://varun19299.github.io/research/attribute-transfer&#34;&gt;Attribute Transfer Blog Post&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Yicheng Wu, Vivek Boominathan, Huaijin Chen, Aswin C. Sankaranarayanan, and Ashok Veeraraghavan. Phasecam3d — Learning phase masks for passive single view depth estimation. In IEEE Intl. Conf. Computational Photography (ICCP), 2019.&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://varun19299.github.io/research/mras&#34;&gt;MRAS Bandits Blog Post&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Achuta Kadambi, Vage Taamazyan, Boxin Shi, and Ramesh Raskar. Polarized 3d: High-quality depth sensing with polarization cues. In International Conference on Computer Vision (ICCV), 2015.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://varun19299.github.io/post/extend-lsd-slam&#34;&gt;Blog Post on extending LSD SLAM&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;!-- 5. [Attribute Transfer Blog Post](/research/attribute-transfer).
+   
+6. [MRAS Bandits Blog Post](/research/mras). --&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://varun19299.github.io/post/extend-lsd-slam&#34;&gt;Blog Post on extending LSD SLAM&lt;/a&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>
