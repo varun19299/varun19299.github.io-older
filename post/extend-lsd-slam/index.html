@@ -456,7 +456,7 @@
         "datePublished": "2019-11-28 00:00:00 \x2b0000 UTC",
         "dateModified" : "2019-11-28 00:00:00 \x2b0000 UTC",
         "url" : "https:\/\/varun19299.github.io\/post\/extend-lsd-slam\/",
-        "wordCount" : "463",
+        "wordCount" : "1356",
         "keywords" : [ "Project","Blog" ]
     }
     </script>
@@ -532,7 +532,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    3 min read
+    7 min read
   </span>
   
 
@@ -590,17 +590,17 @@
 
 <h2 id="what-is-lsd-slam">What is LSD SLAM?</h2>
 
-<p>LSD SLAM stands for Large Scale Direct SLAM, implying that it performs simultaneous localisation and mapping <em>directly</em> on the entire set of image intensities, instead of relying on a subset of points such as SIFT, FAST or ORB features. Essentially, this allows LSD SLAM to utilise all the information available in the image and thereby not discard crucial information contained in edges, which constitutes a major portion of the scene being mapped.</p>
+<p>LSD SLAM stands for <strong>Large Scale Direct SLAM</strong>, implying that it performs simultaneous localisation and mapping <em>directly</em> on the entire set of image intensities, instead of relying on a subset of points such as SIFT, FAST or ORB features. Essentially, this allows LSD SLAM to utilise all the information available in the image and thereby not discard crucial information contained in edges, which constitutes a major portion of the scene being mapped.</p>
 
-<p>Where LSD SLAM crucially differs from earlier direct SLAM methods \cite, is the ingenious method of tracking and depth estimation. Depth estimation is done via <strong>small baseline</strong> stereo which allows for much fewer outliers. Tracking is done using direct image alignment over a subset of frames. The main novelty in this work include:</p>
+<p>Where LSD SLAM crucially differs from earlier direct SLAM methods \cite, is the ingenious methods adopted for tracking and depth estimation. Depth estimation is done via <strong>small baseline</strong> stereo which allows for much fewer outliers. Tracking is done using direct image alignment over a subset of frames. These modifications allow LSD SLAM to be run real-time even with just a CPU. In comparison, previous approaches such as \cite required a complete high-end GPU to run real-time. <strong>The main novelty in this work include:</strong></p>
 
 <ul>
 <li>utilising key-frames to simplify monocular SLAM.</li>
-<li>utilising a scale-aware image alignment algorithm to directly estimate the similarity transform $\xi ∈ \mathcal{sim}(3)$ between two keyframes.</li>
+<li>utilising a scale-aware image alignment algorithm to directly estimate the similarity transform <code>$\xi ∈ \mathcal{sim}(3)$</code> between two keyframes.</li>
 <li>Incorporation of uncertainty of the estimated depth into tracking.</li>
 </ul>
 
-<p>Here, $\mathcal{sim}-3$ is the lie algebra of the Special Euclidean Objects group (SE-3). A lie algebra offers easier optimisation of variables by linearising the manifold of consideration. Intuitively, if we consider just rotation as a matrix, then it must be constrained to be orthogonal ($U^TU=I$). However, if we were optimising it with, say, gradient descent, then there is no guarantee that the resulting matrix would be orthogonal. Further, we only want to optimise on a subset of $\mathbb{R}^{3\times 3}$. Lie algebras encapsulate this effectively: the resultant $\mathcal{sim}-3 \in \mathbb{R}^6$ can be optimised by gradient descent. For more details, we would refer you to (2).</p>
+<p>Here, <code>$\mathcal{sim}-3$</code> is the lie algebra of the Special Euclidean Objects group (SE-3). A lie algebra offers easier optimisation of variables by linearising the manifold of consideration. Intuitively, if we consider just rotation as a matrix, then it must be constrained to be orthogonal <code>($U^TU=I$)</code>. However, if we were optimising it with, say, gradient descent, then there is no guarantee that the resulting matrix would be orthogonal. Further, we only want to optimise on a subset of <code>$\mathbb{R}^{3\times 3}$</code>. Lie algebras encapsulate this effectively: the resultant <code>$\mathcal{sim}-3 \in \mathbb{R}^6$</code> can be optimised by gradient descent. For more details, we refer you to (2).</p>
 
 <h2 id="main-pipeline">Main Pipeline</h2>
 
@@ -620,43 +620,158 @@
 <figure>
 
 
-  <a data-fancybox="" href="pipeline.png" data-caption="Overview of LSD SLAM.">
-<img src="pipeline.png" alt="" width="600" height="600" ></a>
+  <a data-fancybox="" href="pipeline.png" data-caption="Fig 1: Overview of LSD SLAM.">
+<img src="pipeline.png" alt="" width="1400" height="1200" ></a>
 
 
   
   
   <figcaption>
-    Overview of LSD SLAM.
+    Fig 1: Overview of LSD SLAM.
   </figcaption>
 
 
 </figure>
 
 
-<p>The pipeline follows:
-1. Decide whether to initialise a key-frame
-2. Compute incoming pose via direct image alignment
-3. Compute depth via small baseline stereo
-4. Repeat, finally perform map optimisation to correct for scale ambiguity</p>
+<p><strong>The pipeline follows:</strong></p>
 
-<p>We shall elaborate on each of these main steps.</p>
+<ol>
+<li>Compute incoming pose via direct image alignment</li>
+<li>Decide whether to initialise a key-frame</li>
+<li>Compute depth via small baseline stereo</li>
+<li>Repeat, finally perform map optimisation to correct for scale ambiguity</li>
+</ol>
+
+<p>We shall elaborate on each of these main steps in the sections below.</p>
 
 <h3 id="concept-of-keyframes">Concept of Keyframes</h3>
 
-<p>As mentioned before, LSD SLAM heavily utilises the concept of keyframes: &ldquo;special&rdquo; frames, which are initialised when a new frame has a pose significantly different from the current keyframe. The very first frame is taken to be a key-frame, with random normal depth, and random normal depth uncertainity.</p>
+<p>As mentioned before, LSD SLAM heavily utilises the concept of keyframes: &ldquo;special&rdquo; frames, which are initialised when a new frame has a pose significantly different from the current keyframe. The very first frame is taken to be a key-frame, with random normal depth, and random normal depth uncertainity. Map optimisation is performed only on the set of key-frames, further lowering computational costs associated with bundle adjustment and loop closure.</p>
 
-<p>Map optimisation is performed only on the set of key-frames, further lowering computational costs associated with bundle adjustment and loop closure.</p>
+<p>Each key-frame $K_j$ consists of an <strong>image frame, depth map, uncertainity map and pose vector</strong> - denoted by the tuple <code>$(I_j, D_j, U_j, p_j)$</code>, where <code>$I_j \in \mathbb{R}^{m\times n \times 3}$</code>, <code>$D_j \in \mathbb{R^+}^{m\times n}$</code>, <code>$U_j \in \mathbb{R^+}^{m\times n}$</code> and <code>$p_j \in \mathbb{R}^6$</code>. For non-key frames, we are not concerned with depth or uncertainity, and each non-key frame <code>$NK_j$</code> consists of the tuple <code>$(I_j, p_j)$</code>.</p>
 
 <h3 id="direct-image-alignment">Direct Image Alignment</h3>
+
+<p>The objective of direct image aligment is to use a key-frame  <code>$K_i$</code> and a new-frame <code>$I_j$</code> to determine <code>$p_j$</code>. This is done by a warping, where we project points from one image using the available depth information. If we know the pose of the second image, then we can recover the second image from these projected points. Thus, by optimising a function of the form below, we can find the pose of the second image.</p>
+
+<p><code>$$\begin{align} p_j = \text{argmin}_p f(warp(K_i, p), I_j) \end{align} $$</code></p>
+
+<p>Commonly used <code>$f$</code>, also called residue function, include <code>$f(x,y) = ||x-y||^2$</code> (MSE), or the hinge function (which ignores outliers), or L1 distance etc.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="warping.gif" data-caption="Fig 2: Warping images from the TUM room sequence.">
+<img src="warping.gif" alt="" width="1200" height="750" ></a>
+
+
+  
+  
+  <figcaption>
+    Fig 2: Warping images from the <a href="https://vision.in.tum.de/data/datasets/rgbd-dataset/download" target="_blank">TUM room sequence</a>.
+  </figcaption>
+
+
+</figure>
+
+
+<p>In the above figure, we demonstrate inverse image warping. These images have been taken from the <a href="https://vision.in.tum.de/data/datasets/rgbd-dataset/download" target="_blank">TUM room sequence</a>, a common SLAM benchmarking dataset. Black regions correspond to points where the Kinect failed to output any depth. Except when the target pose matches the source pose, this results in zero intensity regions. Providing a more complete depth map can offset this.</p>
+
+<p>Since warping is so sensitive to depth information, it is important we optimise this function or residue only over points with lower variance in depth. This is where we can incorporate the uncertainity matrix <code>$U_i$</code>. One way of doing this is to divide the residue function element-wise by the uncertainity, yielding:</p>
+
+<p><code>$$\begin{align} p_j = \text{argmin}_p f(\frac{warp(K_i, p) - I_j}{g(U_i)}) \end{align} $$</code></p>
+
+<p>Written as a minimisation objective (sum over all pixels <code>$q \in [m]\times[n]$</code> in the image), this becomes:</p>
+
+<p><code>$$\begin{align} p_j = \text{argmin}_p \sum_{q \in [m]\times[n]} f(\frac{warp(K_i[q], p) - I_j[q]}{g(U_i[q])}) \end{align} $$</code></p>
+
+<p>Giving us a similar objective as in Figure 1. LSD SLAM adopts <code>$g(U_i[q])= 2\sigma^2 + \frac{df(warp(K_i, p) - I_j)}{dD_i[q]}^2U_i[q]$</code>. Also note that we have not utilised quite a bit of prior information here. For instance, in the above picture, if you knew two corners of the monitor, you know where the other lie, since the monitor is rectangular. Using such information (priors) can greatly help improve the optimisation landscape. We shall discuss more about incorporating such data-driven priors in the limitations section.</p>
+
+<p>Finally, we are optimising over the pose vector <code>$p_j$</code>. As a matrix, which is commonly used for such projective functions, the pose matrix has 16 entries. However, due to scale and rigid body constraints, this works out to just 6 degrees of freedom (dof). It is important to optimise the function over a linear landscape (or manifold), since it makes it much easier to converge towards an optimal solution. Here&rsquo;s where the <strong>lie algebra</strong> comes into play: it represents a linear manifold of the lie group, which is our pose matrix here. You can employ familiar first and second order optimisers including gradient descent, newton&rsquo;s method etc., but the most common is <a href="https://en.wikipedia.org/wiki/Gauss–Newton_algorithm" target="_blank">Gauss-Newton</a> optimisation.</p>
+
+<h3 id="choosing-key-frames">Choosing Key-frames</h3>
+
+<p>The motivation for choosing key-frames follows a very simple observation - LSD SLAM utilises small-baseline stereo matching, and hence it would be desirable if all the frames belonging to a particular key-frame group (all frames <code>$NK_j$</code> between <code>$K_i, K_{i+1}$</code>) are &ldquo;close&rdquo; to the key-frame <code>$K_i$</code>.</p>
+
+<p>Hence, initialise a new key-frame if,</p>
+
+<p><code>$$||p_j - p_i||&gt; \rho $$</code></p>
+
+<p>When you initialise a new key-frame, use the projected points from the previous key-frames to initialise its depth map. The uncertainity map is similarly projected. Note that this might be semi-dense since not all projected points would cover the new key-frame. Here, to incorporate scale-drift tracking, LSD SLAM normalises the mean inverse depth to be 1. Scale awareness is incorporated during the final map-optimisation across various key-frames.</p>
+
+<h3 id="small-baseline-stereo-matching">Small baseline stereo matching</h3>
+
+<p>We perform many small baseline stereo-matching operations to refine the depth map of the key-frame <code>$K_i$</code>. In a similar manner as (2), only refinements where stereo depth is of higher confidence based on the accuracy of disparity search. This essentially allows us to propogate a semi-dense depth map throughout the whole SLAM pipeline, aiding computational simplicity. Such regions are often those with rich texture, which is expected in stereo based depth estimation.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="lsd_depth.jpeg" data-caption="Fig 3: Small-baseline stereo matching for depth refinement. (Left) Input frame, (Right) Semi-dense depth estimates.">
+<img src="lsd_depth.jpeg" alt="" width="900" height="400" ></a>
+
+
+  
+  
+  <figcaption>
+    Fig 3: Small-baseline stereo matching for depth refinement. (<em>Left</em>) Input frame, (<em>Right</em>) Semi-dense depth estimates.
+  </figcaption>
+
+
+</figure>
+
+
+<h3 id="map-optimisation">Map Optimisation</h3>
+
+<p>At the end of tracking, we obtain a set of key-frames and their coarse pose-estimates. We are left with two pending tasks: (a) <strong>Incorporate global scale into these coarse pose-estimates</strong>. Remember, we initialised the depth map of a new key-frame with mean inverse depth as 1. (b) <strong>Further refine poses by minimising overall entropy</strong>.</p>
 
 <h2 id="limitations-of-lsd-slam">Limitations of LSD SLAM</h2>
 
 <h3 id="scale-ambiguity">Scale Ambiguity</h3>
 
+<p>Both an advantage and weakness.</p>
+
+<p>Why CNN SLAM doesn&rsquo;t cut it.</p>
+
 <h3 id="pure-rotation-settings">Pure Rotation Settings</h3>
 
 <h2 id="can-computational-photography-help-us">Can Computational Photography help us?</h2>
+
+<h3 id="depth-from-defocus-coded-aperture">Depth from Defocus: Coded Aperture</h3>
+
+<h3 id="using-polarisation-for-texture-less-regions">Using polarisation for texture-less regions</h3>
+
+<h3 id="explicit-priors-for-pose-estimation">Explicit priors for pose-estimation</h3>
+
+<p>Make pose-estimation a lot cheaper.</p>
+
+<h3 id="can-we-better-represent-maps">Can we better represent maps?</h3>
 
 <h2 id="references">References</h2>
 
@@ -664,6 +779,7 @@
 <li>A</li>
 <li><a href="A tutorial on SE(3) transformation parameterizations
 and on-manifold optimization" target="_blank">Jose Blanco, &ldquo;A tutorial on SE(3) transformation parameterizations and on-manifold optimization&rdquo;, MAPIR Group</a>.</li>
+<li>Jacob Engel, Jurgen Sturm and Daniel Cremers. &ldquo;Semi-Dense Visual Odometry for a Monocular Camera&rdquo;. In Proceedings of the IEEE International Conference on Computer Vision (ICCV) 2013.</li>
 </ol>
 
     </div>
