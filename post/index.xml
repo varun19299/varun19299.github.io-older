@@ -232,9 +232,9 @@
 
 &lt;p&gt;Monocular depth estimation techniques tends to lack a sense of absolute global scale. Thus, although our relative pose estimations within each key-frame may be accurate, this is no guarantee regarding the global map. While the map-optimisation procedure aims to mitigate this ambiguity, it is worthwhile noting that the &lt;code&gt;$\mathcal{sim}(3)$&lt;/code&gt; objective is non-convex and hence depends to a major extent on the initialisation parameters. This step limits the convergence radius, which is how far LSD SLAM works before producing an inconsistent map.&lt;/p&gt;
 
-&lt;p&gt;A later paper from TU Munich - &amp;ldquo;CNN SLAM&amp;rdquo;, CVPR 2017 (4) -&lt;/p&gt;
+&lt;p&gt;A later paper from TU Munich - &amp;ldquo;CNN SLAM&amp;rdquo;, CVPR 2017 (4) - utilises depth predictions from CNNs for initialising key-frames. In theory, if the CNN is able to produce depths corresponding to the actual absolute depth, there would be no need for &lt;code&gt;$\mathcal{sim}(3)$&lt;/code&gt; map optimisation. Unfortunately most state-of-the-art monocular depth estimation networks require a scaling factor to perform reliably on novel scenes. Hence, outside standard benchmarking sequences such as the TUM set, absolute depth cannot be obtained.&lt;/p&gt;
 
-&lt;p&gt;Why CNN SLAM doesn&amp;rsquo;t cut it.&lt;/p&gt;
+&lt;p&gt;Instead of relying on triangulation based methods for obtaining depth, we can instead utilise depth from defocus. Again, for a monocular method, &lt;strong&gt;depth from defocus&lt;/strong&gt; (DfD) requires a comparison image. However, utilising a technique from computational photography called &lt;strong&gt;coded aperture&lt;/strong&gt;, we can obtain absolute depth using just a single image.&lt;/p&gt;
 
 &lt;h3 id=&#34;depth-from-defocus-coded-aperture&#34;&gt;Depth from Defocus: Coded Aperture&lt;/h3&gt;
 

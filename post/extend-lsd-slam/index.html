@@ -456,7 +456,7 @@
         "datePublished": "2019-11-28 00:00:00 \x2b0000 UTC",
         "dateModified" : "2019-11-28 00:00:00 \x2b0000 UTC",
         "url" : "https:\/\/varun19299.github.io\/post\/extend-lsd-slam\/",
-        "wordCount" : "1857",
+        "wordCount" : "1966",
         "keywords" : [ "Research Ideas","Blog" ]
     }
     </script>
@@ -532,7 +532,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    9 min read
+    10 min read
   </span>
   
 
@@ -799,9 +799,9 @@
 
 <p>Monocular depth estimation techniques tends to lack a sense of absolute global scale. Thus, although our relative pose estimations within each key-frame may be accurate, this is no guarantee regarding the global map. While the map-optimisation procedure aims to mitigate this ambiguity, it is worthwhile noting that the <code>$\mathcal{sim}(3)$</code> objective is non-convex and hence depends to a major extent on the initialisation parameters. This step limits the convergence radius, which is how far LSD SLAM works before producing an inconsistent map.</p>
 
-<p>A later paper from TU Munich - &ldquo;CNN SLAM&rdquo;, CVPR 2017 (4) -</p>
+<p>A later paper from TU Munich - &ldquo;CNN SLAM&rdquo;, CVPR 2017 (4) - utilises depth predictions from CNNs for initialising key-frames. In theory, if the CNN is able to produce depths corresponding to the actual absolute depth, there would be no need for <code>$\mathcal{sim}(3)$</code> map optimisation. Unfortunately most state-of-the-art monocular depth estimation networks require a scaling factor to perform reliably on novel scenes. Hence, outside standard benchmarking sequences such as the TUM set, absolute depth cannot be obtained.</p>
 
-<p>Why CNN SLAM doesn&rsquo;t cut it.</p>
+<p>Instead of relying on triangulation based methods for obtaining depth, we can instead utilise depth from defocus. Again, for a monocular method, <strong>depth from defocus</strong> (DfD) requires a comparison image. However, utilising a technique from computational photography called <strong>coded aperture</strong>, we can obtain absolute depth using just a single image.</p>
 
 <h3 id="depth-from-defocus-coded-aperture">Depth from Defocus: Coded Aperture</h3>
 
