@@ -456,8 +456,8 @@
         "datePublished": "2019-11-28 00:00:00 \x2b0000 UTC",
         "dateModified" : "2019-11-28 00:00:00 \x2b0000 UTC",
         "url" : "https:\/\/varun19299.github.io\/post\/extend-lsd-slam\/",
-        "wordCount" : "1356",
-        "keywords" : [ "Project","Blog" ]
+        "wordCount" : "1857",
+        "keywords" : [ "Research Ideas","Blog" ]
     }
     </script>
 
@@ -532,7 +532,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    7 min read
+    9 min read
   </span>
   
 
@@ -590,17 +590,19 @@
 
 <h2 id="what-is-lsd-slam">What is LSD SLAM?</h2>
 
-<p>LSD SLAM stands for <strong>Large Scale Direct SLAM</strong>, implying that it performs simultaneous localisation and mapping <em>directly</em> on the entire set of image intensities, instead of relying on a subset of points such as SIFT, FAST or ORB features. Essentially, this allows LSD SLAM to utilise all the information available in the image and thereby not discard crucial information contained in edges, which constitutes a major portion of the scene being mapped.</p>
+<p>LSD SLAM stands for <strong>Large Scale Direct SLAM</strong>, implying that it performs simultaneous localisation and mapping <em>directly</em> on the entire set of image intensities, instead of relying on a subset of points such as <a href="https://en.wikipedia.org/wiki/Scale-invariant_feature_transform" target="_blank">SIFT</a>, <a href="https://en.wikipedia.org/wiki/Features_from_accelerated_segment_test" target="_blank">FAST</a> or <a href="https://en.wikipedia.org/wiki/Oriented_FAST_and_rotated_BRIEF" target="_blank">ORB</a> features. Essentially, this allows LSD SLAM to utilise all the information available in the image and thereby not discard crucial information contained in edges, which constitutes a major portion of the scene being mapped.</p>
 
 <p>Where LSD SLAM crucially differs from earlier direct SLAM methods \cite, is the ingenious methods adopted for tracking and depth estimation. Depth estimation is done via <strong>small baseline</strong> stereo which allows for much fewer outliers. Tracking is done using direct image alignment over a subset of frames. These modifications allow LSD SLAM to be run real-time even with just a CPU. In comparison, previous approaches such as \cite required a complete high-end GPU to run real-time. <strong>The main novelty in this work include:</strong></p>
 
 <ul>
-<li>utilising key-frames to simplify monocular SLAM.</li>
-<li>utilising a scale-aware image alignment algorithm to directly estimate the similarity transform <code>$\xi ∈ \mathcal{sim}(3)$</code> between two keyframes.</li>
-<li>Incorporation of uncertainty of the estimated depth into tracking.</li>
+<li><p>utilising key-frames to simplify monocular SLAM. Semi-dense depth maps are propogated only for key-frames and map optimisation is done only for their poses. <strong><em>This reduces the complexity of the bundle adjustment problem by a large margin.</em></strong></p></li>
+
+<li><p>utilising a scale-aware image alignment algorithm to directly estimate the similarity transform <code>$\xi ∈ \mathcal{sim}(3)$</code> between two keyframes. <strong><em>By doing so, we aren&rsquo;t restricted to only points pertaining to hand-engineered features.</em></strong></p></li>
+
+<li><p>Incorporation of uncertainty of the estimated depth into tracking. For every point, before solving the correspondence problem, we roughly estimate whether it is worthwhile to do so, ie., <strong><em>is the computational cost worth the gain in depth accuracy?</em></strong></p></li>
 </ul>
 
-<p>Here, <code>$\mathcal{sim}-3$</code> is the lie algebra of the Special Euclidean Objects group (SE-3). A lie algebra offers easier optimisation of variables by linearising the manifold of consideration. Intuitively, if we consider just rotation as a matrix, then it must be constrained to be orthogonal <code>($U^TU=I$)</code>. However, if we were optimising it with, say, gradient descent, then there is no guarantee that the resulting matrix would be orthogonal. Further, we only want to optimise on a subset of <code>$\mathbb{R}^{3\times 3}$</code>. Lie algebras encapsulate this effectively: the resultant <code>$\mathcal{sim}-3 \in \mathbb{R}^6$</code> can be optimised by gradient descent. For more details, we refer you to (2).</p>
+<p>Here, <code>$\mathcal{sim}-3$</code> is the lie algebra of the Special Euclidean Objects group (SE-3). A lie algebra offers easier optimisation of variables by linearising the manifold of consideration. Intuitively, if we consider just rotation as a matrix, then it must be constrained to be orthogonal <code>($U^TU=I$)</code>. However, if we were optimising it with, say, gradient descent, then there is no guarantee that the resulting matrix would be orthogonal. Further, we only want to optimise on a subset of <code>$\mathbb{R}^{4\times 4}$</code>. Lie algebras encapsulate this effectively: the resultant <code>$\mathcal{sim}-3 \in \mathbb{R}^6$</code> can be optimised by gradient descent. For more details, we refer you to (2).</p>
 
 <h2 id="main-pipeline">Main Pipeline</h2>
 
@@ -655,9 +657,9 @@
 
 <p>The objective of direct image aligment is to use a key-frame  <code>$K_i$</code> and a new-frame <code>$I_j$</code> to determine <code>$p_j$</code>. This is done by a warping, where we project points from one image using the available depth information. If we know the pose of the second image, then we can recover the second image from these projected points. Thus, by optimising a function of the form below, we can find the pose of the second image.</p>
 
-<p><code>$$\begin{align} p_j = \text{argmin}_p f(warp(K_i, p), I_j) \end{align} $$</code></p>
+<p><code>$$\begin{align} p_j = \text{argmin}_p f(I_i - I_j[warp(D_i, p)]) \end{align} $$</code></p>
 
-<p>Commonly used <code>$f$</code>, also called residue function, include <code>$f(x,y) = ||x-y||^2$</code> (MSE), or the hinge function (which ignores outliers), or L1 distance etc.</p>
+<p>Commonly used <code>$f$</code>, also called residue function, include <code>$f(x - y) = ||x-y||^2$</code> (MSE), or the hinge function (which ignores outliers), or L1 distance etc.</p>
 
 
 
@@ -693,13 +695,15 @@
 
 <p>Since warping is so sensitive to depth information, it is important we optimise this function or residue only over points with lower variance in depth. This is where we can incorporate the uncertainity matrix <code>$U_i$</code>. One way of doing this is to divide the residue function element-wise by the uncertainity, yielding:</p>
 
-<p><code>$$\begin{align} p_j = \text{argmin}_p f(\frac{warp(K_i, p) - I_j}{g(U_i)}) \end{align} $$</code></p>
+<p><code>$$\begin{align} p_j = \text{argmin}_p f(\frac{I_i - I_j[warp(D_i, p)]}{g(U_i)}) \end{align} $$</code></p>
 
-<p>Written as a minimisation objective (sum over all pixels <code>$q \in [m]\times[n]$</code> in the image), this becomes:</p>
+<p>The warp function, <code>$w(D, p):$ pixel $\to$ pixel</code>, takes a depth map <code>$D$</code> and a pixel point <code>$p$</code> and computes the corresponding pixel point in frame <code>$j$</code>. This requires projection to 3D world coordinates and re-projection to the second camera frame. Both of these require knowledge of the <a href="http://ftp.cs.toronto.edu/pub/psala/VM/camera-parameters.pdf" target="_blank">camera parameters</a>, which we implicitly assume to be known here. Written as a minimisation objective (sum over all pixels <code>$q \in \Sigma_D \subset [m]\times[n]$</code> in the image), this becomes:</p>
 
-<p><code>$$\begin{align} p_j = \text{argmin}_p \sum_{q \in [m]\times[n]} f(\frac{warp(K_i[q], p) - I_j[q]}{g(U_i[q])}) \end{align} $$</code></p>
+<p><code>$$\begin{align} p_j = \text{argmin}_p \sum_{q \in \Sigma_D \subset [m]\times[n]} f(\frac{I_i[q] - I_j[warp(D_i[q], p)]}{g(U_i[q])}) \end{align} $$</code></p>
 
-<p>Giving us a similar objective as in Figure 1. LSD SLAM adopts <code>$g(U_i[q])= 2\sigma^2 + \frac{df(warp(K_i, p) - I_j)}{dD_i[q]}^2U_i[q]$</code>. Also note that we have not utilised quite a bit of prior information here. For instance, in the above picture, if you knew two corners of the monitor, you know where the other lie, since the monitor is rectangular. Using such information (priors) can greatly help improve the optimisation landscape. We shall discuss more about incorporating such data-driven priors in the limitations section.</p>
+<p>Giving us a similar objective as in Figure 1. LSD SLAM adopts <code>$g(U_i[q])= 2\sigma^2 + \frac{df(I_i[q] - I_j[warp(D_i[q], p)])}{dD_i[q]}^2U_i[q]$</code>. Intuitively, this penalises regions with continuous image intensity variation lesser than those with abrupt variations. We minimise this objective only over a subset of points for which we know depth information, hence being <strong>semi-dense image alignment</strong>.</p>
+
+<p>Also note that we have not utilised quite a bit of prior information here. For instance, in the above picture, if you knew two corners of the monitor, you know where the other lie, since the monitor is rectangular. Using such information (priors) can greatly help improve the optimisation landscape. We shall discuss more about incorporating such data-driven priors in the limitations section.</p>
 
 <p>Finally, we are optimising over the pose vector <code>$p_j$</code>. As a matrix, which is commonly used for such projective functions, the pose matrix has 16 entries. However, due to scale and rigid body constraints, this works out to just 6 degrees of freedom (dof). It is important to optimise the function over a linear landscape (or manifold), since it makes it much easier to converge towards an optimal solution. Here&rsquo;s where the <strong>lie algebra</strong> comes into play: it represents a linear manifold of the lie group, which is our pose matrix here. You can employ familiar first and second order optimisers including gradient descent, newton&rsquo;s method etc., but the most common is <a href="https://en.wikipedia.org/wiki/Gauss–Newton_algorithm" target="_blank">Gauss-Newton</a> optimisation.</p>
 
@@ -715,7 +719,7 @@
 
 <h3 id="small-baseline-stereo-matching">Small baseline stereo matching</h3>
 
-<p>We perform many small baseline stereo-matching operations to refine the depth map of the key-frame <code>$K_i$</code>. In a similar manner as (2), only refinements where stereo depth is of higher confidence based on the accuracy of disparity search. This essentially allows us to propogate a semi-dense depth map throughout the whole SLAM pipeline, aiding computational simplicity. Such regions are often those with rich texture, which is expected in stereo based depth estimation.</p>
+<p>We perform many small baseline stereo-matching operations to refine the depth map of the key-frame <code>$K_i$</code>. We do not compute depth maps for non-key frames. In a similar manner to (2), only refinements where stereo depth is of higher confidence based on the accuracy of disparity search. This essentially allows us to propogate a semi-dense depth map throughout the whole SLAM pipeline, aiding computational simplicity. Such regions are often those with rich texture, which is expected in stereo based depth estimation.</p>
 
 
 
@@ -751,19 +755,59 @@
 
 <p>At the end of tracking, we obtain a set of key-frames and their coarse pose-estimates. We are left with two pending tasks: (a) <strong>Incorporate global scale into these coarse pose-estimates</strong>. Remember, we initialised the depth map of a new key-frame with mean inverse depth as 1. (b) <strong>Further refine poses by minimising overall entropy</strong>.</p>
 
+<p>We achieve the first by doing a similar photometric residual minimisation, but here over <code>$\xi ∈ \mathcal{sim}(3)$</code>, which has 7-degrees of freedom, the additional dof representing scale. This allows us to find scale parameters which best satisfy other key-frame constraints. This is written as:</p>
+
+<p><code>$$\begin{align} p_j = \text{argmin}_p \sum_{q \in \Sigma_D \subset [m]\times[n]} f(\frac{I_i[q] - I_j[warp(D_i[q], p)]}{g_1(U_i[q])} + \frac{D_i[q] - D_j[warp(D_i[q], p)]}{g_2(U_i[q])}) \end{align} $$</code></p>
+
+<p>Here, <code>$g_2$</code> is another smoothening term with respect to <code>$D_i[q] - D_j[warp(K_i[q], p)]$</code>. Again observe that map-optimisation is performed only among key-frames, hence we have access to <code>$D_j$</code>. In practice, <code>$\mathcal{sim}(3)$</code> tracking is computationally similar to <code>$\mathcal{se}(3)$</code> tracking.</p>
+
 <h2 id="limitations-of-lsd-slam">Limitations of LSD SLAM</h2>
+
+<p>While LSD SLAM certainly does produce quite impressive results, it does have its fair share of limitations too. We discuss the fundamental challenges behind a few of these below. Most of these limitations arise due to the restricted information available in a monocular video stream. And this is precisely where Computational Photography can be leveraged. By further considering information from physical camera models and their corresponding optics, we can alleviate a few of these challenges.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="lsd_slam_run.gif" data-caption="Fig 4: LSD SLAM results.">
+<img src="lsd_slam_run.gif" alt="" width="500" height="500" ></a>
+
+
+  
+  
+  <figcaption>
+    Fig 4: LSD SLAM results.
+  </figcaption>
+
+
+</figure>
+
 
 <h3 id="scale-ambiguity">Scale Ambiguity</h3>
 
-<p>Both an advantage and weakness.</p>
+<p>Monocular depth estimation techniques tends to lack a sense of absolute global scale. Thus, although our relative pose estimations within each key-frame may be accurate, this is no guarantee regarding the global map. While the map-optimisation procedure aims to mitigate this ambiguity, it is worthwhile noting that the <code>$\mathcal{sim}(3)$</code> objective is non-convex and hence depends to a major extent on the initialisation parameters. This step limits the convergence radius, which is how far LSD SLAM works before producing an inconsistent map.</p>
+
+<p>A later paper from TU Munich - &ldquo;CNN SLAM&rdquo;, CVPR 2017 (4) -</p>
 
 <p>Why CNN SLAM doesn&rsquo;t cut it.</p>
 
+<h3 id="depth-from-defocus-coded-aperture">Depth from Defocus: Coded Aperture</h3>
+
 <h3 id="pure-rotation-settings">Pure Rotation Settings</h3>
 
-<h2 id="can-computational-photography-help-us">Can Computational Photography help us?</h2>
-
-<h3 id="depth-from-defocus-coded-aperture">Depth from Defocus: Coded Aperture</h3>
+<h2 id="other-extensions">Other Extensions</h2>
 
 <h3 id="using-polarisation-for-texture-less-regions">Using polarisation for texture-less regions</h3>
 
@@ -776,10 +820,13 @@
 <h2 id="references">References</h2>
 
 <ol>
-<li>A</li>
-<li><a href="A tutorial on SE(3) transformation parameterizations
-and on-manifold optimization" target="_blank">Jose Blanco, &ldquo;A tutorial on SE(3) transformation parameterizations and on-manifold optimization&rdquo;, MAPIR Group</a>.</li>
-<li>Jacob Engel, Jurgen Sturm and Daniel Cremers. &ldquo;Semi-Dense Visual Odometry for a Monocular Camera&rdquo;. In Proceedings of the IEEE International Conference on Computer Vision (ICCV) 2013.</li>
+<li><p>Thomas Schöps, Jacob Engel and Daniel Cremers. <a href="https://vision.in.tum.de/research/vslam/lsdslam" target="_blank">&ldquo;LSD-SLAM: Large-Scale Direct Monocular SLAM&rdquo;</a>. In Proceedings of the European Conference on Computer Vision (ECCV), 2014.</p></li>
+
+<li><p>Jose Blanco.<a href="http://ingmec.ual.es/~jlblanco/papers/jlblanco2010geometry3D_techrep.pdf" target="_blank">&ldquo;A tutorial on SE(3) transformation parameterizations and on-manifold optimization&rdquo;</a>. MAPIR Group.</p></li>
+
+<li><p>Jacob Engel, Jurgen Sturm and Daniel Cremers. <a href="https://jsturm.de/publications/data/engel2013iccv.pdf" target="_blank">&ldquo;Semi-Dense Visual Odometry for a Monocular Camera&rdquo;</a>. In Proceedings of the IEEE International Conference on Computer Vision (ICCV), 2013.</p></li>
+
+<li><p>Keisuke Tatento, Federico Tombari, Iro Laina and Nassir Navab. <a href="https://arxiv.org/abs/1704.03489" target="_blank">&ldquo;CNN-SLAM: Real-time dense monocular SLAM with learned depth prediction&rdquo;</a>. In Proceedings of Conference on Computer Vision and Pattern Recognition (CVPR), 2017.</p></li>
 </ol>
 
     </div>
@@ -791,7 +838,7 @@ and on-manifold optimization" target="_blank">Jose Blanco, &ldquo;A tutorial on 
 
 <div class="article-tags">
   
-  <a class="badge badge-light" href="https://varun19299.github.io/tags/project/">Project</a>
+  <a class="badge badge-light" href="https://varun19299.github.io/tags/research-ideas/">Research Ideas</a>
   
 </div>
 
@@ -839,18 +886,6 @@ and on-manifold optimization" target="_blank">Jose Blanco, &ldquo;A tutorial on 
 
 
     
-    
-    <div class="article-widget">
-      <div class="hr-light"></div>
-      <h3>Related</h3>
-      <ul>
-        
-        <li><a href="https://varun19299.github.io/research/mras/">MRAS Bandits: From Control Theory to Slot Machines</a></li>
-        
-        <li><a href="https://varun19299.github.io/projects/lidar/">Simulating Commercial LiDARs using Physics based Game Engines</a></li>
-        
-      </ul>
-    </div>
     
     
 
