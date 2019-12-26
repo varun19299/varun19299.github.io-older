@@ -456,7 +456,7 @@
         "datePublished": "2019-11-28 00:00:00 \x2b0000 UTC",
         "dateModified" : "2019-11-28 00:00:00 \x2b0000 UTC",
         "url" : "https:\/\/varun19299.github.io\/post\/extend-lsd-slam\/",
-        "wordCount" : "2123",
+        "wordCount" : "2277",
         "keywords" : [ "Research Ideas","Blog" ]
     }
     </script>
@@ -532,7 +532,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    10 min read
+    11 min read
   </span>
   
 
@@ -597,12 +597,12 @@
 <ul>
 <li><p>utilising key-frames to simplify monocular SLAM. Semi-dense depth maps are propogated only for key-frames and map optimisation is done only for their poses. <strong><em>This reduces the complexity of the bundle adjustment problem by a large margin.</em></strong></p></li>
 
-<li><p>utilising a scale-aware image alignment algorithm to directly estimate the similarity transform <code>$\xi ∈ \mathcal{sim}(3)$</code> between two keyframes. <strong><em>By doing so, we aren&rsquo;t restricted to only points pertaining to hand-engineered features.</em></strong></p></li>
+<li><p>utilising a scale-aware image alignment algorithm to directly estimate the similarity transform <code>$\xi ∈ \mathcal{se}(3)$</code> between two keyframes. <strong><em>By doing so, we aren&rsquo;t restricted to only points pertaining to hand-engineered features.</em></strong></p></li>
 
 <li><p>Incorporation of uncertainty of the estimated depth into tracking. For every point, before solving the correspondence problem, we roughly estimate whether it is worthwhile to do so, ie., <strong><em>is the computational cost worth the gain in depth accuracy?</em></strong></p></li>
 </ul>
 
-<p>Here, <code>$\mathcal{sim}-3$</code> is the lie algebra of the Special Euclidean Objects group (SE-3). A lie algebra offers easier optimisation of variables by linearising the manifold of consideration. Intuitively, if we consider just rotation as a matrix, then it must be constrained to be orthogonal <code>($U^TU=I$)</code>. However, if we were optimising it with, say, gradient descent, then there is no guarantee that the resulting matrix would be orthogonal. Further, we only want to optimise on a subset of <code>$\mathbb{R}^{4\times 4}$</code>. Lie algebras encapsulate this effectively: the resultant <code>$\mathcal{sim}-3 \in \mathbb{R}^6$</code> can be optimised by gradient descent. For more details, we refer you to (2).</p>
+<p>Here, <code>$\mathcal{se}-3$</code> is the lie algebra of the Special Euclidean Objects group (SE-3). A lie algebra offers easier optimisation of variables by linearising the manifold of consideration. Intuitively, if we consider just rotation as a matrix, then it must be constrained to be orthogonal <code>($U^TU=I$)</code>. However, if we were optimising it with, say, gradient descent, then there is no guarantee that the resulting matrix would be orthogonal. Further, we only want to optimise on a subset of <code>$\mathbb{R}^{4\times 4}$</code>. Lie algebras encapsulate this effectively: the resultant <code>$\mathcal{se}-3 \in \mathbb{R}^6$</code> can be optimised by gradient descent. For more details, we refer you to (2).</p>
 
 <h2 id="main-pipeline">Main Pipeline</h2>
 
@@ -799,7 +799,13 @@
 
 <p>Monocular depth estimation techniques tends to lack a sense of absolute global scale. Thus, although our relative pose estimations within each key-frame may be accurate, this is no guarantee regarding the global map. While the map-optimisation procedure aims to mitigate this ambiguity, it is worthwhile noting that the <code>$\mathcal{sim}(3)$</code> objective is non-convex and hence depends to a major extent on the initialisation parameters. This step limits the convergence radius, which is how far LSD SLAM works before producing an inconsistent map.</p>
 
-<p>A later paper from TU Munich - &ldquo;CNN SLAM&rdquo;, CVPR 2017 (4) - utilises depth predictions from CNNs for initialising key-frames. In theory, if the CNN is able to produce depths corresponding to the actual absolute depth, there would be no need for <code>$\mathcal{sim}(3)$</code> map optimisation. Unfortunately most state-of-the-art monocular depth estimation networks require a scaling factor to perform reliably on novel scenes. Hence, outside standard benchmarking sequences such as the TUM set or the <a href="http://www.cvlibs.net/datasets/kitti/eval_depth.php?benchmark=depth_completion" target="_blank">KITTI dataset</a>, absolute depth cannot be obtained.</p>
+<p>A later paper from TU Munich - &ldquo;CNN SLAM&rdquo;, CVPR 2017 (4) - utilises depth predictions from CNNs for initialising key-frames. In theory, if the CNN is able to produce depths corresponding to the actual absolute depth, there would be no need for <code>$\mathcal{sim}(3)$</code> map optimisation. Unfortunately most state-of-the-art monocular depth estimation networks require a scaling factor to perform reliably on novel scenes. Hence, outside standard benchmarking sequences such as the TUM set or the <a href="http://www.cvlibs.net/datasets/kitti/eval_depth.php?benchmark=depth_completion" target="_blank">KITTI dataset</a>, absolute depth cannot be obtained. In the video below, CNN SLAM is run on an indoor room sequence.</p>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/z_NJxbkQnBU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
 
 <p>Instead of relying on triangulation based methods for obtaining depth, we can instead utilise depth from defocus. Again, for a monocular method, <strong>depth from defocus</strong> (DfD) requires a comparison image. However, utilising a technique from computational photography called <strong>coded aperture</strong>, we can obtain absolute depth using just a single image. The idea in coded aperture is similar to depth from defocus, where points out of focus are blurred by the Point Spread Function (PSF) associated with the lens. Unlike classical DfD, we have prior knowledge regarding these Point Spread Functions and can hence determine depth from a single image itself.</p>
 
@@ -838,6 +844,40 @@
 <p>For more details regarding the formation of such PSFs, which involves <a href="https://en.wikipedia.org/wiki/Fresnel_diffraction" target="_blank">Fresnel Propogation</a>, we would refer you to (5).</p>
 
 <h3 id="pure-rotation-settings">Pure Rotation Settings</h3>
+
+<p>Another scenario where LSD SLAM fails to track frames is under pure rotation. Small scale stereo matching fails in this setting due to the lack of a baseline. Further, since LSD SLAM relies on visual odometry (and not any other inputs from sensors etc.), once tracking fails, it cannot recover by re-localisation or track through strong rotations by using previously triangulated geometry.</p>
+
+<p>CNN SLAM, however, does work under this scenario, provided that the CNN can generate relatively consistent depth maps for the encountered frames. Again, this does not necessarily imply that the absolute depths would be consistent, especially for novel scenes where most present monocular methods have trouble generalising.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="cnn_slam.png" data-caption="Fig 6: Comparison on a sequence that includes mostly pure rotational camera motion between the reconstruction obtained by groundtruth depth (left), CNN-SLAM (middle) and LSD-SLAM (right). Source: CNN SLAM (4), figure 5.">
+<img src="cnn_slam.png" alt="" width="600" height="900" ></a>
+
+
+  
+  
+  <figcaption>
+    Fig 6: Comparison on a sequence that includes mostly pure rotational camera motion between the reconstruction obtained by <strong>groundtruth</strong> depth <em>(left)</em>, <strong>CNN-SLAM</strong> <em>(middle)</em> and <strong>LSD-SLAM</strong> <em>(right)</em>. Source: CNN SLAM (4), figure 5.
+  </figcaption>
+
+
+</figure>
+
 
 <h2 id="other-extensions">Other Extensions</h2>
 

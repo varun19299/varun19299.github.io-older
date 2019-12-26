@@ -5,12 +5,49 @@
     <link>https://varun19299.github.io/</link>
       <atom:link href="https://varun19299.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Varun Sundar</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 11 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 12 Dec 2019 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://varun19299.github.io/img/icon-192.png</url>
       <title>Varun Sundar</title>
       <link>https://varun19299.github.io/</link>
     </image>
+    
+    <item>
+      <title>Research Interests in Computational Photography</title>
+      <link>https://varun19299.github.io/post/research-interests-ci/</link>
+      <pubDate>Thu, 12 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>https://varun19299.github.io/post/research-interests-ci/</guid>
+      <description>
+
+&lt;p&gt;My research interests in computational photography mainly revolve around the following questions: (a) Can we better condition difficult tasks such as &lt;strong&gt;monocular depth estimation&lt;/strong&gt;, occluded imaging and robust &lt;strong&gt;Simultaneous Localisation and Mapping&lt;/strong&gt; (SLAM) by utilising tools such as end to end (e2e) optimisation (1), active lighting and cues from physics. (b) Can we leverage the advantages of novel hardware to go &lt;strong&gt;beyond just the scene captured by a camera&lt;/strong&gt;? Here, the term novel hardware could include one or a combination of cameras such as lensless cameras, event based cameras, gated imaging, etc.&lt;/p&gt;
+
+&lt;p&gt;Phase masks (1,2) have proven to be an effective medium for implementing e2e optimi- sation in terms of modulating light received by the sensor. Wu et al. (PhaseCam3D, (2)) showed the usage of phase masks for depth estimation in a single shot setting. By learn- ing an optimal phase mask which best allows a reconstruction network to infer depth, the authors couple coded imaging with data based priors. This addresses one of the major is- sues with monocular depth estimation: scale ambiguity. Can we extend these techniques to monocular SLAM?&lt;/p&gt;
+
+&lt;p&gt;For instance, &lt;strong&gt;Large Scale Direct&lt;/strong&gt; (LSD) SLAM is a popular direct-based monocular SLAM method. Instead of working with features, it operates on the entire set of image intensities for tracking and depth estimation. Tracking is based on optimising a 6 degree of freedom (dof) vector on the Lie algebra &lt;code&gt;$\mathcal{se}-3$&lt;/code&gt; of the &lt;a href=&#34;https://en.wikipedia.org/wiki/Euclidean_group&#34; target=&#34;_blank&#34;&gt;Special Euclidean Group&lt;/a&gt; &lt;strong&gt;SE(3)&lt;/strong&gt;. Depth refinement is based on small-baseline stereo comparisons between adjacent frames. While building the map, pose optimisation is again performed over the 7-dof similarity space &lt;code&gt;$\mathcal{sim}-3$&lt;/code&gt; (6-dof + 1 scale component), in order to correct for accumulated scale ambiguity. Scale drift limits the radius of convergence of LSD SLAM to around 500m. Can we solve this issue at the pose-estimation stage itself by using scale-aware depth maps from &lt;em&gt;PhaseCam3D&lt;/em&gt;? I have elaborated more on ideas concerned with extending LSD SLAM with tools from Computational Photography in this &lt;a href=&#34;https://varun19299.github.io/post/extend-lsd-slam&#34;&gt;related blog post&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Another trend in computational photography is to rethink the capabilities of a camera by producing images that would be considered impossible with a conventional camera, essentially imaging the “invisible”. This includes work on gated imaging for &lt;strong&gt;outperform- ing LiDARs&lt;/strong&gt; (3), &lt;strong&gt;tetra-hertz imaging&lt;/strong&gt; (4), &lt;strong&gt;occluded imaging&lt;/strong&gt; (5) and &lt;strong&gt;lensless imaging&lt;/strong&gt; (6–8). Such work exploits visual constructs such as time of flight imaging, modulated fresnel prop- agation and coherent optics. Can we further aid the creation of such novel cameras by using optimised hardware: which allows us to co-design algorithms, optics and task-specific constrains?&lt;/p&gt;
+
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Vincent Sitzmann, Steven Diamond, Yifan Peng, Xiong Dun, Stephen Boyd, Wolfgang Heidrich, Felix Heide, and Gordon Wetzstein. &lt;a href=&#34;https://vccimaging.org/Publications/Sitzmann2018EndToEndOptics/Sitzmann2018EndToEndOptics.pdf&#34; target=&#34;_blank&#34;&gt;End-to-end optimization of optics and image processing for achromatic extended depth of field and super-resolution imaging&lt;/a&gt;. ACM Trans. Graph., 37(4):114:1–114:13, July 2018.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Yicheng Wu, Vivek Boominathan, Huaijin Chen, Aswin C. Sankaranarayanan, and Ashok Veeraraghavan. &lt;a href=&#34;http://imagesci.ece.cmu.edu/files/paper/2019/PhaseCam_ICCP19.pdf&#34; target=&#34;_blank&#34;&gt;Phasecam3d — Learning phase masks for passive single view depth estimation&lt;/a&gt;. In IEEE Intl. Conf. Computational Photography (ICCP), 2019.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Tobias Gruber, Frank D. Julca-Aguilar, Mario Bijelic, Werner Ritter, Klaus Dietmayer, and Felix Heide. &lt;a href=&#34;http://openaccess.thecvf.com/content_ICCV_2019/papers/Gruber_Gated2Depth_Real-Time_Dense_Lidar_From_Gated_Images_ICCV_2019_paper.pdf&#34; target=&#34;_blank&#34;&gt;Gated2depth: Real-time dense lidar from gated images&lt;/a&gt;. CoRR, abs/1902.04997, 2019.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;AlbertRedo-Sanchez,BarmakHeshmat,AlirezaAghasi,SalmanNaqvi,MingjieZhang,JustinRomberg, and Ramesh Raskar.&lt;a href=&#34;https://www.nature.com/articles/ncomms12665&#34; target=&#34;_blank&#34;&gt;Terahertz time-gated spectral imaging for content extraction through layered structures&lt;/a&gt;. Nature Communications, 7(1):12665, 2016.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;G. Satat, M. Tancik, and R. Raskar. &lt;a href=&#34;https://web.media.mit.edu/~guysatat/fog/materials/TowardsPhotographyThroughRealisticFog.pdf&#34; target=&#34;_blank&#34;&gt;Towards photography through realistic fog&lt;/a&gt;. In 2018 IEEE Inter- national Conference on Computational Photography (ICCP), pages 1–10, May 2018.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;M. Salman. Asif, Ali Ayremlou, Aswin C. Sankaranarayanan, Ashok Veeraraghavan, and Richard Baraniuk. &lt;a href=&#34;http://ieeexplore.ieee.org/abstract/document/7517296/&#34; target=&#34;_blank&#34;&gt;FlatCam: Thin, lensless cameras using coded aperture and computation&lt;/a&gt;. IEEE Trans. Computa- tional Imaging, 3(3):384–397, 2017.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Nick Antipa, Grace Kuo, Reinhard Heckel, Ben Mildenhall, Emrah Bostan, Ren Ng, and Laura Waller. &lt;a href=&#34;https://arxiv.org/abs/1710.02134&#34; target=&#34;_blank&#34;&gt;Diffusercam: lensless single-exposure 3d imaging&lt;/a&gt;. Optica, 5(1):1–9, Jan 2018.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Kristina Monakhova, Joshua Yurtsever, Grace Kuo, Nick Antipa, Kyrollos Yanny, and Laura Waller. &lt;a href=&#34;https://arxiv.org/abs/1908.11502&#34; target=&#34;_blank&#34;&gt;Learned reconstructions for practical mask-based lensless imaging&lt;/a&gt;. Opt. Express, 27(20):28075–28090, Sep 2019.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
     
     <item>
       <title>References: Statement of Purpose</title>
@@ -138,12 +175,12 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;utilising key-frames to simplify monocular SLAM. Semi-dense depth maps are propogated only for key-frames and map optimisation is done only for their poses. &lt;strong&gt;&lt;em&gt;This reduces the complexity of the bundle adjustment problem by a large margin.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;utilising a scale-aware image alignment algorithm to directly estimate the similarity transform &lt;code&gt;$\xi ∈ \mathcal{sim}(3)$&lt;/code&gt; between two keyframes. &lt;strong&gt;&lt;em&gt;By doing so, we aren&amp;rsquo;t restricted to only points pertaining to hand-engineered features.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;utilising a scale-aware image alignment algorithm to directly estimate the similarity transform &lt;code&gt;$\xi ∈ \mathcal{se}(3)$&lt;/code&gt; between two keyframes. &lt;strong&gt;&lt;em&gt;By doing so, we aren&amp;rsquo;t restricted to only points pertaining to hand-engineered features.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;Incorporation of uncertainty of the estimated depth into tracking. For every point, before solving the correspondence problem, we roughly estimate whether it is worthwhile to do so, ie., &lt;strong&gt;&lt;em&gt;is the computational cost worth the gain in depth accuracy?&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Here, &lt;code&gt;$\mathcal{sim}-3$&lt;/code&gt; is the lie algebra of the Special Euclidean Objects group (SE-3). A lie algebra offers easier optimisation of variables by linearising the manifold of consideration. Intuitively, if we consider just rotation as a matrix, then it must be constrained to be orthogonal &lt;code&gt;($U^TU=I$)&lt;/code&gt;. However, if we were optimising it with, say, gradient descent, then there is no guarantee that the resulting matrix would be orthogonal. Further, we only want to optimise on a subset of &lt;code&gt;$\mathbb{R}^{4\times 4}$&lt;/code&gt;. Lie algebras encapsulate this effectively: the resultant &lt;code&gt;$\mathcal{sim}-3 \in \mathbb{R}^6$&lt;/code&gt; can be optimised by gradient descent. For more details, we refer you to (2).&lt;/p&gt;
+&lt;p&gt;Here, &lt;code&gt;$\mathcal{se}-3$&lt;/code&gt; is the lie algebra of the Special Euclidean Objects group (SE-3). A lie algebra offers easier optimisation of variables by linearising the manifold of consideration. Intuitively, if we consider just rotation as a matrix, then it must be constrained to be orthogonal &lt;code&gt;($U^TU=I$)&lt;/code&gt;. However, if we were optimising it with, say, gradient descent, then there is no guarantee that the resulting matrix would be orthogonal. Further, we only want to optimise on a subset of &lt;code&gt;$\mathbb{R}^{4\times 4}$&lt;/code&gt;. Lie algebras encapsulate this effectively: the resultant &lt;code&gt;$\mathcal{se}-3 \in \mathbb{R}^6$&lt;/code&gt; can be optimised by gradient descent. For more details, we refer you to (2).&lt;/p&gt;
 
 &lt;h2 id=&#34;main-pipeline&#34;&gt;Main Pipeline&lt;/h2&gt;
 
@@ -340,7 +377,13 @@
 
 &lt;p&gt;Monocular depth estimation techniques tends to lack a sense of absolute global scale. Thus, although our relative pose estimations within each key-frame may be accurate, this is no guarantee regarding the global map. While the map-optimisation procedure aims to mitigate this ambiguity, it is worthwhile noting that the &lt;code&gt;$\mathcal{sim}(3)$&lt;/code&gt; objective is non-convex and hence depends to a major extent on the initialisation parameters. This step limits the convergence radius, which is how far LSD SLAM works before producing an inconsistent map.&lt;/p&gt;
 
-&lt;p&gt;A later paper from TU Munich - &amp;ldquo;CNN SLAM&amp;rdquo;, CVPR 2017 (4) - utilises depth predictions from CNNs for initialising key-frames. In theory, if the CNN is able to produce depths corresponding to the actual absolute depth, there would be no need for &lt;code&gt;$\mathcal{sim}(3)$&lt;/code&gt; map optimisation. Unfortunately most state-of-the-art monocular depth estimation networks require a scaling factor to perform reliably on novel scenes. Hence, outside standard benchmarking sequences such as the TUM set or the &lt;a href=&#34;http://www.cvlibs.net/datasets/kitti/eval_depth.php?benchmark=depth_completion&#34; target=&#34;_blank&#34;&gt;KITTI dataset&lt;/a&gt;, absolute depth cannot be obtained.&lt;/p&gt;
+&lt;p&gt;A later paper from TU Munich - &amp;ldquo;CNN SLAM&amp;rdquo;, CVPR 2017 (4) - utilises depth predictions from CNNs for initialising key-frames. In theory, if the CNN is able to produce depths corresponding to the actual absolute depth, there would be no need for &lt;code&gt;$\mathcal{sim}(3)$&lt;/code&gt; map optimisation. Unfortunately most state-of-the-art monocular depth estimation networks require a scaling factor to perform reliably on novel scenes. Hence, outside standard benchmarking sequences such as the TUM set or the &lt;a href=&#34;http://www.cvlibs.net/datasets/kitti/eval_depth.php?benchmark=depth_completion&#34; target=&#34;_blank&#34;&gt;KITTI dataset&lt;/a&gt;, absolute depth cannot be obtained. In the video below, CNN SLAM is run on an indoor room sequence.&lt;/p&gt;
+
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;https://www.youtube.com/embed/z_NJxbkQnBU&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
 
 &lt;p&gt;Instead of relying on triangulation based methods for obtaining depth, we can instead utilise depth from defocus. Again, for a monocular method, &lt;strong&gt;depth from defocus&lt;/strong&gt; (DfD) requires a comparison image. However, utilising a technique from computational photography called &lt;strong&gt;coded aperture&lt;/strong&gt;, we can obtain absolute depth using just a single image. The idea in coded aperture is similar to depth from defocus, where points out of focus are blurred by the Point Spread Function (PSF) associated with the lens. Unlike classical DfD, we have prior knowledge regarding these Point Spread Functions and can hence determine depth from a single image itself.&lt;/p&gt;
 
@@ -379,6 +422,40 @@
 &lt;p&gt;For more details regarding the formation of such PSFs, which involves &lt;a href=&#34;https://en.wikipedia.org/wiki/Fresnel_diffraction&#34; target=&#34;_blank&#34;&gt;Fresnel Propogation&lt;/a&gt;, we would refer you to (5).&lt;/p&gt;
 
 &lt;h3 id=&#34;pure-rotation-settings&#34;&gt;Pure Rotation Settings&lt;/h3&gt;
+
+&lt;p&gt;Another scenario where LSD SLAM fails to track frames is under pure rotation. Small scale stereo matching fails in this setting due to the lack of a baseline. Further, since LSD SLAM relies on visual odometry (and not any other inputs from sensors etc.), once tracking fails, it cannot recover by re-localisation or track through strong rotations by using previously triangulated geometry.&lt;/p&gt;
+
+&lt;p&gt;CNN SLAM, however, does work under this scenario, provided that the CNN can generate relatively consistent depth maps for the encountered frames. Again, this does not necessarily imply that the absolute depths would be consistent, especially for novel scenes where most present monocular methods have trouble generalising.&lt;/p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;cnn_slam.png&#34; data-caption=&#34;Fig 6: Comparison on a sequence that includes mostly pure rotational camera motion between the reconstruction obtained by groundtruth depth (left), CNN-SLAM (middle) and LSD-SLAM (right). Source: CNN SLAM (4), figure 5.&#34;&gt;
+&lt;img src=&#34;cnn_slam.png&#34; alt=&#34;&#34; width=&#34;600&#34; height=&#34;900&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Fig 6: Comparison on a sequence that includes mostly pure rotational camera motion between the reconstruction obtained by &lt;strong&gt;groundtruth&lt;/strong&gt; depth &lt;em&gt;(left)&lt;/em&gt;, &lt;strong&gt;CNN-SLAM&lt;/strong&gt; &lt;em&gt;(middle)&lt;/em&gt; and &lt;strong&gt;LSD-SLAM&lt;/strong&gt; &lt;em&gt;(right)&lt;/em&gt;. Source: CNN SLAM (4), figure 5.
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
 
 &lt;h2 id=&#34;other-extensions&#34;&gt;Other Extensions&lt;/h2&gt;
 

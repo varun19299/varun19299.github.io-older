@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Research Interests | Varun Sundar</title>
+    <link>https://varun19299.github.io/tags/research-interests/</link>
+      <atom:link href="https://varun19299.github.io/tags/research-interests/index.xml" rel="self" type="application/rss+xml" />
+    <description>Research Interests</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 12 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://varun19299.github.io/img/icon-192.png</url>
+      <title>Research Interests</title>
+      <link>https://varun19299.github.io/tags/research-interests/</link>
+    </image>
+    
+    <item>
+      <title>Research Interests in Computational Photography</title>
+      <link>https://varun19299.github.io/post/research-interests-ci/</link>
+      <pubDate>Thu, 12 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>https://varun19299.github.io/post/research-interests-ci/</guid>
+      <description>
+
+&lt;p&gt;My research interests in computational photography mainly revolve around the following questions: (a) Can we better condition difficult tasks such as &lt;strong&gt;monocular depth estimation&lt;/strong&gt;, occluded imaging and robust &lt;strong&gt;Simultaneous Localisation and Mapping&lt;/strong&gt; (SLAM) by utilising tools such as end to end (e2e) optimisation (1), active lighting and cues from physics. (b) Can we leverage the advantages of novel hardware to go &lt;strong&gt;beyond just the scene captured by a camera&lt;/strong&gt;? Here, the term novel hardware could include one or a combination of cameras such as lensless cameras, event based cameras, gated imaging, etc.&lt;/p&gt;
+
+&lt;p&gt;Phase masks (1,2) have proven to be an effective medium for implementing e2e optimi- sation in terms of modulating light received by the sensor. Wu et al. (PhaseCam3D, (2)) showed the usage of phase masks for depth estimation in a single shot setting. By learn- ing an optimal phase mask which best allows a reconstruction network to infer depth, the authors couple coded imaging with data based priors. This addresses one of the major is- sues with monocular depth estimation: scale ambiguity. Can we extend these techniques to monocular SLAM?&lt;/p&gt;
+
+&lt;p&gt;For instance, &lt;strong&gt;Large Scale Direct&lt;/strong&gt; (LSD) SLAM is a popular direct-based monocular SLAM method. Instead of working with features, it operates on the entire set of image intensities for tracking and depth estimation. Tracking is based on optimising a 6 degree of freedom (dof) vector on the Lie algebra &lt;code&gt;$\mathcal{se}-3$&lt;/code&gt; of the &lt;a href=&#34;https://en.wikipedia.org/wiki/Euclidean_group&#34; target=&#34;_blank&#34;&gt;Special Euclidean Group&lt;/a&gt; &lt;strong&gt;SE(3)&lt;/strong&gt;. Depth refinement is based on small-baseline stereo comparisons between adjacent frames. While building the map, pose optimisation is again performed over the 7-dof similarity space &lt;code&gt;$\mathcal{sim}-3$&lt;/code&gt; (6-dof + 1 scale component), in order to correct for accumulated scale ambiguity. Scale drift limits the radius of convergence of LSD SLAM to around 500m. Can we solve this issue at the pose-estimation stage itself by using scale-aware depth maps from &lt;em&gt;PhaseCam3D&lt;/em&gt;? I have elaborated more on ideas concerned with extending LSD SLAM with tools from Computational Photography in this &lt;a href=&#34;https://varun19299.github.io/post/extend-lsd-slam&#34;&gt;related blog post&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Another trend in computational photography is to rethink the capabilities of a camera by producing images that would be considered impossible with a conventional camera, essentially imaging the “invisible”. This includes work on gated imaging for &lt;strong&gt;outperform- ing LiDARs&lt;/strong&gt; (3), &lt;strong&gt;tetra-hertz imaging&lt;/strong&gt; (4), &lt;strong&gt;occluded imaging&lt;/strong&gt; (5) and &lt;strong&gt;lensless imaging&lt;/strong&gt; (6–8). Such work exploits visual constructs such as time of flight imaging, modulated fresnel prop- agation and coherent optics. Can we further aid the creation of such novel cameras by using optimised hardware: which allows us to co-design algorithms, optics and task-specific constrains?&lt;/p&gt;
+
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Vincent Sitzmann, Steven Diamond, Yifan Peng, Xiong Dun, Stephen Boyd, Wolfgang Heidrich, Felix Heide, and Gordon Wetzstein. &lt;a href=&#34;https://vccimaging.org/Publications/Sitzmann2018EndToEndOptics/Sitzmann2018EndToEndOptics.pdf&#34; target=&#34;_blank&#34;&gt;End-to-end optimization of optics and image processing for achromatic extended depth of field and super-resolution imaging&lt;/a&gt;. ACM Trans. Graph., 37(4):114:1–114:13, July 2018.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Yicheng Wu, Vivek Boominathan, Huaijin Chen, Aswin C. Sankaranarayanan, and Ashok Veeraraghavan. &lt;a href=&#34;http://imagesci.ece.cmu.edu/files/paper/2019/PhaseCam_ICCP19.pdf&#34; target=&#34;_blank&#34;&gt;Phasecam3d — Learning phase masks for passive single view depth estimation&lt;/a&gt;. In IEEE Intl. Conf. Computational Photography (ICCP), 2019.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Tobias Gruber, Frank D. Julca-Aguilar, Mario Bijelic, Werner Ritter, Klaus Dietmayer, and Felix Heide. &lt;a href=&#34;http://openaccess.thecvf.com/content_ICCV_2019/papers/Gruber_Gated2Depth_Real-Time_Dense_Lidar_From_Gated_Images_ICCV_2019_paper.pdf&#34; target=&#34;_blank&#34;&gt;Gated2depth: Real-time dense lidar from gated images&lt;/a&gt;. CoRR, abs/1902.04997, 2019.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;AlbertRedo-Sanchez,BarmakHeshmat,AlirezaAghasi,SalmanNaqvi,MingjieZhang,JustinRomberg, and Ramesh Raskar.&lt;a href=&#34;https://www.nature.com/articles/ncomms12665&#34; target=&#34;_blank&#34;&gt;Terahertz time-gated spectral imaging for content extraction through layered structures&lt;/a&gt;. Nature Communications, 7(1):12665, 2016.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;G. Satat, M. Tancik, and R. Raskar. &lt;a href=&#34;https://web.media.mit.edu/~guysatat/fog/materials/TowardsPhotographyThroughRealisticFog.pdf&#34; target=&#34;_blank&#34;&gt;Towards photography through realistic fog&lt;/a&gt;. In 2018 IEEE Inter- national Conference on Computational Photography (ICCP), pages 1–10, May 2018.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;M. Salman. Asif, Ali Ayremlou, Aswin C. Sankaranarayanan, Ashok Veeraraghavan, and Richard Baraniuk. &lt;a href=&#34;http://ieeexplore.ieee.org/abstract/document/7517296/&#34; target=&#34;_blank&#34;&gt;FlatCam: Thin, lensless cameras using coded aperture and computation&lt;/a&gt;. IEEE Trans. Computa- tional Imaging, 3(3):384–397, 2017.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Nick Antipa, Grace Kuo, Reinhard Heckel, Ben Mildenhall, Emrah Bostan, Ren Ng, and Laura Waller. &lt;a href=&#34;https://arxiv.org/abs/1710.02134&#34; target=&#34;_blank&#34;&gt;Diffusercam: lensless single-exposure 3d imaging&lt;/a&gt;. Optica, 5(1):1–9, Jan 2018.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Kristina Monakhova, Joshua Yurtsever, Grace Kuo, Nick Antipa, Kyrollos Yanny, and Laura Waller. &lt;a href=&#34;https://arxiv.org/abs/1908.11502&#34; target=&#34;_blank&#34;&gt;Learned reconstructions for practical mask-based lensless imaging&lt;/a&gt;. Opt. Express, 27(20):28075–28090, Sep 2019.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
