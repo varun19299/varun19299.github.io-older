@@ -456,7 +456,7 @@
         "datePublished": "2019-11-28 00:00:00 \x2b0000 UTC",
         "dateModified" : "2019-11-28 00:00:00 \x2b0000 UTC",
         "url" : "https:\/\/varun19299.github.io\/post\/extend-lsd-slam\/",
-        "wordCount" : "1966",
+        "wordCount" : "2123",
         "keywords" : [ "Research Ideas","Blog" ]
     }
     </script>
@@ -799,11 +799,43 @@
 
 <p>Monocular depth estimation techniques tends to lack a sense of absolute global scale. Thus, although our relative pose estimations within each key-frame may be accurate, this is no guarantee regarding the global map. While the map-optimisation procedure aims to mitigate this ambiguity, it is worthwhile noting that the <code>$\mathcal{sim}(3)$</code> objective is non-convex and hence depends to a major extent on the initialisation parameters. This step limits the convergence radius, which is how far LSD SLAM works before producing an inconsistent map.</p>
 
-<p>A later paper from TU Munich - &ldquo;CNN SLAM&rdquo;, CVPR 2017 (4) - utilises depth predictions from CNNs for initialising key-frames. In theory, if the CNN is able to produce depths corresponding to the actual absolute depth, there would be no need for <code>$\mathcal{sim}(3)$</code> map optimisation. Unfortunately most state-of-the-art monocular depth estimation networks require a scaling factor to perform reliably on novel scenes. Hence, outside standard benchmarking sequences such as the TUM set, absolute depth cannot be obtained.</p>
+<p>A later paper from TU Munich - &ldquo;CNN SLAM&rdquo;, CVPR 2017 (4) - utilises depth predictions from CNNs for initialising key-frames. In theory, if the CNN is able to produce depths corresponding to the actual absolute depth, there would be no need for <code>$\mathcal{sim}(3)$</code> map optimisation. Unfortunately most state-of-the-art monocular depth estimation networks require a scaling factor to perform reliably on novel scenes. Hence, outside standard benchmarking sequences such as the TUM set or the <a href="http://www.cvlibs.net/datasets/kitti/eval_depth.php?benchmark=depth_completion" target="_blank">KITTI dataset</a>, absolute depth cannot be obtained.</p>
 
-<p>Instead of relying on triangulation based methods for obtaining depth, we can instead utilise depth from defocus. Again, for a monocular method, <strong>depth from defocus</strong> (DfD) requires a comparison image. However, utilising a technique from computational photography called <strong>coded aperture</strong>, we can obtain absolute depth using just a single image.</p>
+<p>Instead of relying on triangulation based methods for obtaining depth, we can instead utilise depth from defocus. Again, for a monocular method, <strong>depth from defocus</strong> (DfD) requires a comparison image. However, utilising a technique from computational photography called <strong>coded aperture</strong>, we can obtain absolute depth using just a single image. The idea in coded aperture is similar to depth from defocus, where points out of focus are blurred by the Point Spread Function (PSF) associated with the lens. Unlike classical DfD, we have prior knowledge regarding these Point Spread Functions and can hence determine depth from a single image itself.</p>
 
-<h3 id="depth-from-defocus-coded-aperture">Depth from Defocus: Coded Aperture</h3>
+<p>One recent method in coded aperture (5), utilises optimised phase masks to determine these PSFs, producing much more reliable depth maps. It also doesn&rsquo;t suffer from a previous well-known limitation of such techniques: loss of illumination intensity.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="phasecam.png" data-caption="Fig 5: Sample depth maps from PhaseCam3D (5). Compared against a Kinect. Notice how accurate the absolute groundt ruth outputs are.">
+<img src="phasecam.png" alt="" width="800" height="1200" ></a>
+
+
+  
+  
+  <figcaption>
+    Fig 5: Sample depth maps from PhaseCam3D (5). Compared against a Kinect. Notice how accurate the absolute groundt ruth outputs are.
+  </figcaption>
+
+
+</figure>
+
+
+<p>For more details regarding the formation of such PSFs, which involves <a href="https://en.wikipedia.org/wiki/Fresnel_diffraction" target="_blank">Fresnel Propogation</a>, we would refer you to (5).</p>
 
 <h3 id="pure-rotation-settings">Pure Rotation Settings</h3>
 
@@ -827,6 +859,8 @@
 <li><p>Jacob Engel, Jurgen Sturm and Daniel Cremers. <a href="https://jsturm.de/publications/data/engel2013iccv.pdf" target="_blank">&ldquo;Semi-Dense Visual Odometry for a Monocular Camera&rdquo;</a>. In Proceedings of the IEEE International Conference on Computer Vision (ICCV), 2013.</p></li>
 
 <li><p>Keisuke Tatento, Federico Tombari, Iro Laina and Nassir Navab. <a href="https://arxiv.org/abs/1704.03489" target="_blank">&ldquo;CNN-SLAM: Real-time dense monocular SLAM with learned depth prediction&rdquo;</a>. In Proceedings of Conference on Computer Vision and Pattern Recognition (CVPR), 2017.</p></li>
+
+<li><p>Yicheng Wu, Vivek Boominathan, Huaijin Chen, Aswin C. Sankaranarayanan, and Ashok Veeraraghavan. <a href="http://imagesci.ece.cmu.edu/files/paper/2019/PhaseCam_ICCP19.pdf" target="_blank">&ldquo;Phasecam3d — Learning phase masks for passive single view depth estimation&rdquo;</a>. In IEEE Intl. Conf. Computational Photography (ICCP), 2019.</p></li>
 </ol>
 
     </div>

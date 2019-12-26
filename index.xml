@@ -84,7 +84,7 @@
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, A Sadhu, R Nevatia. &lt;strong&gt;FARCNN: Decoupling attributes from object detection&lt;/strong&gt;. In Viterbi-IUSSTF (Indo US Science and Technology Forum) REU Symposium, July 2019.&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, S Siddique, K Mitra. &lt;strong&gt;A Unified Framework for Lensless Image Recovery”&lt;/strong&gt;. To be submitted in the IEEE Transactions on Computational Imaging 2020.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, S Siddique, K Mitra. &lt;strong&gt;&amp;ldquo;A Unified Framework for Lensless Image Recovery”&lt;/strong&gt;. To be submitted in the IEEE Transactions on Computational Imaging 2020.&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;A Kadambi, V Taamazyan, B Shi, and R Raskar. Polarized 3d: High-quality depth sensing with polarization cues. In International Conference on Computer Vision (ICCV), 2015.&lt;/p&gt;&lt;/li&gt;
 
@@ -99,7 +99,7 @@
       <pubDate>Tue, 10 Dec 2019 00:00:00 +0000</pubDate>
       <guid>https://varun19299.github.io/sop-references-uw-madison/</guid>
       <description>&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, S Siddique, K Mitra, &lt;strong&gt;“A Unified Framework for Lensless Image Recovery&lt;/strong&gt;, to be submitted to the IEEE Transactions on Computational Imaging 2020.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, S Siddique, K Mitra, &lt;strong&gt;“A Unified Framework for Lensless Image Recovery&amp;rdquo;&lt;/strong&gt;, to be submitted to the IEEE Transactions on Computational Imaging 2020.&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;The &lt;strong&gt;9th HULT Prize, Singapore&lt;/strong&gt;. Held at Nanyang Technology University (NTU), Singapore,16th to 18th March 2018.&lt;/p&gt;&lt;/li&gt;
 
@@ -340,11 +340,43 @@
 
 &lt;p&gt;Monocular depth estimation techniques tends to lack a sense of absolute global scale. Thus, although our relative pose estimations within each key-frame may be accurate, this is no guarantee regarding the global map. While the map-optimisation procedure aims to mitigate this ambiguity, it is worthwhile noting that the &lt;code&gt;$\mathcal{sim}(3)$&lt;/code&gt; objective is non-convex and hence depends to a major extent on the initialisation parameters. This step limits the convergence radius, which is how far LSD SLAM works before producing an inconsistent map.&lt;/p&gt;
 
-&lt;p&gt;A later paper from TU Munich - &amp;ldquo;CNN SLAM&amp;rdquo;, CVPR 2017 (4) - utilises depth predictions from CNNs for initialising key-frames. In theory, if the CNN is able to produce depths corresponding to the actual absolute depth, there would be no need for &lt;code&gt;$\mathcal{sim}(3)$&lt;/code&gt; map optimisation. Unfortunately most state-of-the-art monocular depth estimation networks require a scaling factor to perform reliably on novel scenes. Hence, outside standard benchmarking sequences such as the TUM set, absolute depth cannot be obtained.&lt;/p&gt;
+&lt;p&gt;A later paper from TU Munich - &amp;ldquo;CNN SLAM&amp;rdquo;, CVPR 2017 (4) - utilises depth predictions from CNNs for initialising key-frames. In theory, if the CNN is able to produce depths corresponding to the actual absolute depth, there would be no need for &lt;code&gt;$\mathcal{sim}(3)$&lt;/code&gt; map optimisation. Unfortunately most state-of-the-art monocular depth estimation networks require a scaling factor to perform reliably on novel scenes. Hence, outside standard benchmarking sequences such as the TUM set or the &lt;a href=&#34;http://www.cvlibs.net/datasets/kitti/eval_depth.php?benchmark=depth_completion&#34; target=&#34;_blank&#34;&gt;KITTI dataset&lt;/a&gt;, absolute depth cannot be obtained.&lt;/p&gt;
 
-&lt;p&gt;Instead of relying on triangulation based methods for obtaining depth, we can instead utilise depth from defocus. Again, for a monocular method, &lt;strong&gt;depth from defocus&lt;/strong&gt; (DfD) requires a comparison image. However, utilising a technique from computational photography called &lt;strong&gt;coded aperture&lt;/strong&gt;, we can obtain absolute depth using just a single image.&lt;/p&gt;
+&lt;p&gt;Instead of relying on triangulation based methods for obtaining depth, we can instead utilise depth from defocus. Again, for a monocular method, &lt;strong&gt;depth from defocus&lt;/strong&gt; (DfD) requires a comparison image. However, utilising a technique from computational photography called &lt;strong&gt;coded aperture&lt;/strong&gt;, we can obtain absolute depth using just a single image. The idea in coded aperture is similar to depth from defocus, where points out of focus are blurred by the Point Spread Function (PSF) associated with the lens. Unlike classical DfD, we have prior knowledge regarding these Point Spread Functions and can hence determine depth from a single image itself.&lt;/p&gt;
 
-&lt;h3 id=&#34;depth-from-defocus-coded-aperture&#34;&gt;Depth from Defocus: Coded Aperture&lt;/h3&gt;
+&lt;p&gt;One recent method in coded aperture (5), utilises optimised phase masks to determine these PSFs, producing much more reliable depth maps. It also doesn&amp;rsquo;t suffer from a previous well-known limitation of such techniques: loss of illumination intensity.&lt;/p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;phasecam.png&#34; data-caption=&#34;Fig 5: Sample depth maps from PhaseCam3D (5). Compared against a Kinect. Notice how accurate the absolute groundt ruth outputs are.&#34;&gt;
+&lt;img src=&#34;phasecam.png&#34; alt=&#34;&#34; width=&#34;800&#34; height=&#34;1200&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Fig 5: Sample depth maps from PhaseCam3D (5). Compared against a Kinect. Notice how accurate the absolute groundt ruth outputs are.
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+
+&lt;p&gt;For more details regarding the formation of such PSFs, which involves &lt;a href=&#34;https://en.wikipedia.org/wiki/Fresnel_diffraction&#34; target=&#34;_blank&#34;&gt;Fresnel Propogation&lt;/a&gt;, we would refer you to (5).&lt;/p&gt;
 
 &lt;h3 id=&#34;pure-rotation-settings&#34;&gt;Pure Rotation Settings&lt;/h3&gt;
 
@@ -368,6 +400,8 @@
 &lt;li&gt;&lt;p&gt;Jacob Engel, Jurgen Sturm and Daniel Cremers. &lt;a href=&#34;https://jsturm.de/publications/data/engel2013iccv.pdf&#34; target=&#34;_blank&#34;&gt;&amp;ldquo;Semi-Dense Visual Odometry for a Monocular Camera&amp;rdquo;&lt;/a&gt;. In Proceedings of the IEEE International Conference on Computer Vision (ICCV), 2013.&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;Keisuke Tatento, Federico Tombari, Iro Laina and Nassir Navab. &lt;a href=&#34;https://arxiv.org/abs/1704.03489&#34; target=&#34;_blank&#34;&gt;&amp;ldquo;CNN-SLAM: Real-time dense monocular SLAM with learned depth prediction&amp;rdquo;&lt;/a&gt;. In Proceedings of Conference on Computer Vision and Pattern Recognition (CVPR), 2017.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Yicheng Wu, Vivek Boominathan, Huaijin Chen, Aswin C. Sankaranarayanan, and Ashok Veeraraghavan. &lt;a href=&#34;http://imagesci.ece.cmu.edu/files/paper/2019/PhaseCam_ICCP19.pdf&#34; target=&#34;_blank&#34;&gt;&amp;ldquo;Phasecam3d — Learning phase masks for passive single view depth estimation&amp;rdquo;&lt;/a&gt;. In IEEE Intl. Conf. Computational Photography (ICCP), 2019.&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
     </item>
@@ -681,7 +715,36 @@ that&amp;rsquo;s why they call it the present”&lt;/p&gt;
       <pubDate>Wed, 15 May 2019 00:00:00 +0000</pubDate>
       <guid>https://varun19299.github.io/sop-references-berkeley/</guid>
       <description>&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, S Siddique, K Mitra, &lt;strong&gt;“A Unified Framework for Lensless Image Recovery&lt;/strong&gt;, to be submitted in the IEEE Transactions on Computational Imaging 2020.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, S Siddique, K Mitra, &lt;strong&gt;“A Unified Framework for Lensless Image Recovery&amp;rdquo;&lt;/strong&gt;, to be submitted in the IEEE Transactions on Computational Imaging 2020.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The &lt;strong&gt;9th HULT Prize, Singapore&lt;/strong&gt;. Held at Nanyang Technology University (NTU), Singapore,16th to 18th March 2018.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, A Sadhu, R Nevatia, &lt;strong&gt;“FARCNN: Decoupling attributes from object detection”&lt;/strong&gt;, Viterbi-IUSSTF (Indo US Science and Technology Forum) REU Symposium, July 2019.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Yicheng Wu, Vivek Boominathan, Huaijin Chen, Aswin C. Sankaranarayanan, and Ashok Veeraraghavan. Phasecam3d — Learning phase masks for passive single view depth estimation. In IEEE Intl. Conf. Computational Photography (ICCP), 2019.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Achuta Kadambi, Vage Taamazyan, Boxin Shi, and Ramesh Raskar. Polarized 3d: High-quality depth sensing with polarization cues. In International Conference on Computer Vision (ICCV), 2015.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://varun19299.github.io/post/extend-lsd-slam&#34;&gt;Blog Post on extending LSD SLAM&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://cfi.iitm.ac.in/wordpress/&#34; target=&#34;_blank&#34;&gt;Centre for Innovation, IIT Madras&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Nick Antipa, Patrick Oare, Emrah Bostan, Ren Ng and Laura Waller. Video from Stills: Lensless Imaging with Rolling Shutter. In IEEE Intl. Conf. Computational Photography (ICCP), 2019.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- 5. [Attribute Transfer Blog Post](/research/attribute-transfer).
+   
+1. [MRAS Bandits Blog Post](/research/mras). --&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>References: Statement of Purpose</title>
+      <link>https://varun19299.github.io/sop-references-rice/</link>
+      <pubDate>Wed, 15 May 2019 00:00:00 +0000</pubDate>
+      <guid>https://varun19299.github.io/sop-references-rice/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, S Siddique, K Mitra, &lt;strong&gt;“A Unified Framework for Lensless Image Recovery&amp;rdquo;&lt;/strong&gt;, to be submitted to the IEEE Transactions on Pattern Analysis and Machine Intelligence (PAMI) 2020.&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;The &lt;strong&gt;9th HULT Prize, Singapore&lt;/strong&gt;. Held at Nanyang Technology University (NTU), Singapore,16th to 18th March 2018.&lt;/p&gt;&lt;/li&gt;
 
@@ -1087,7 +1150,7 @@ that&amp;rsquo;s why they call it the present”&lt;/p&gt;
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://varun19299.github.io/sop-references-caltech/</guid>
       <description>&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, S Siddique, K Mitra, &lt;strong&gt;“A Unified Framework for Lensless Image Recovery&lt;/strong&gt;, to be submitted in the IEEE Transactions on Computational Imaging 2020.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, S Siddique, K Mitra, &lt;strong&gt;“A Unified Framework for Lensless Image Recovery&amp;rdquo;&lt;/strong&gt;, to be submitted in the IEEE Transactions on Computational Imaging 2020.&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;The &lt;strong&gt;9th HULT Prize, Singapore&lt;/strong&gt;. Held at Nanyang Technology University (NTU), Singapore,16th to 18th March 2018.&lt;/p&gt;&lt;/li&gt;
 
@@ -1118,7 +1181,7 @@ that&amp;rsquo;s why they call it the present”&lt;/p&gt;
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://varun19299.github.io/sop-references-usc/</guid>
       <description>&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, S Siddique, K Mitra, &lt;strong&gt;“A Unified Framework for Lensless Image Recovery&lt;/strong&gt;, to be submitted in the IEEE Transactions on Computational Imaging 2020.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;V Sundar&lt;/strong&gt;, S Siddique, K Mitra, &lt;strong&gt;“A Unified Framework for Lensless Image Recovery&amp;rdquo;&lt;/strong&gt;, to be submitted in the IEEE Transactions on Computational Imaging 2020.&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;The &lt;strong&gt;9th HULT Prize, Singapore&lt;/strong&gt;. Held at Nanyang Technology University (NTU), Singapore,16th to 18th March 2018.&lt;/p&gt;&lt;/li&gt;
 
